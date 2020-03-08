@@ -1,11 +1,20 @@
 package com.example.demo.entities;
 
-import javax.persistence.*;
-import java.util.Objects;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "addresses")
 public class Address extends BaseEntity {
+
+    @Column
+    private String city;
 
     @Column
     private String street;
@@ -16,11 +25,19 @@ public class Address extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private AddressType addressType;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "person_id")
     private Person person;
 
     public Address() {}
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
 
     public String getStreet() {
         return street;
@@ -52,21 +69,7 @@ public class Address extends BaseEntity {
 
     public void setPerson(Person person) {
         this.person = person;
+        person.addAddress(this);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Address address = (Address) o;
-        return Objects.equals(street, address.street) &&
-                Objects.equals(buildingNum, address.buildingNum) &&
-                addressType == address.addressType &&
-                Objects.equals(person, address.person);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(street, buildingNum, addressType, person);
-    }
 }

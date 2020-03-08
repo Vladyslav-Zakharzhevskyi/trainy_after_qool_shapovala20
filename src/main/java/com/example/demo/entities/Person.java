@@ -1,9 +1,21 @@
 package com.example.demo.entities;
 
-import javax.persistence.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "persons")
@@ -18,14 +30,21 @@ public class Person extends BaseEntity {
     @Column
     private Integer age;
 
-    @OneToMany(mappedBy = "person", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "person", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Address> addresses = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "employees")
-    private List<Job> jobs;
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany
+    @JoinTable(name = "persons_has_jobs",
+                    joinColumns = {@JoinColumn(name = "person_id")},
+                    inverseJoinColumns = {@JoinColumn(name = "job_id")})
+    private List<Job> jobs = new ArrayList<>();
 
     @Column
     private Double salary;
+
+    @Enumerated(EnumType.STRING)
+    private Currency currency;
 
     public Person() {}
 
@@ -62,11 +81,11 @@ public class Person extends BaseEntity {
     }
 
     public void addAddress(Address address) {
-        if (addresses.contains(address))
+        if (addresses.contains(address)) {
             return;
-
-        address.setPerson(this);
+        }
         addresses.add(address);
+        address.setPerson(this);
     }
 
     public List<Job> getJobs() {
@@ -75,6 +94,14 @@ public class Person extends BaseEntity {
 
     public void setJobs(List<Job> jobs) {
         this.jobs = jobs;
+    }
+
+    public void addJob(Job job) {
+        if (jobs.contains(job)) {
+            return;
+        }
+        jobs.add(job);
+        job.addEmployee(this);
     }
 
     public Double getSalary() {
@@ -86,20 +113,25 @@ public class Person extends BaseEntity {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Person person = (Person) o;
-        return Objects.equals(firstName, person.firstName) &&
-                Objects.equals(lastName, person.lastName) &&
-                Objects.equals(age, person.age) &&
-                Objects.equals(addresses, person.addresses) &&
-                Objects.equals(jobs, person.jobs) &&
-                Objects.equals(salary, person.salary);
+    public String toString() {
+        return "Person{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                '}';
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(firstName, lastName, age, addresses, jobs, salary);
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
+    }
+
+    public boolean containAddress(Address address) {
+        if (address == null || address.getId() == null) {
+            return false;
+        }
+        return addresses.contains(address);
     }
 }

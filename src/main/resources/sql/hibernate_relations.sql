@@ -5,6 +5,7 @@ create table persons
     last_name  varchar(20),
     age        integer     not null,
     salary     real        not null,
+    currency   varchar(3),
 
     constraint persons_id primary key (id)
 );
@@ -12,14 +13,16 @@ create table persons
 create table addresses
 (
     id           uuid default gen_random_uuid(),
+    city         varchar(100),
     street       varchar(100) not null,
     building_num varchar(10)  not null,
-    address_type varchar(10)  not null,
+    address_type varchar(15)  not null,
     person_id    uuid,
 
     constraint addresses_id primary key (id),
     constraint addresses_has_person foreign key (person_id) references persons (id) on delete set null
 );
+
 
 create table jobs
 (

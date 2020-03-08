@@ -1,7 +1,9 @@
 package com.example.demo.entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "jobs")
@@ -14,11 +16,8 @@ public class Job extends BaseEntity {
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 
-    @ManyToMany
-    @JoinTable(name = "persons_has_jobs",
-            joinColumns = {@JoinColumn(name = "job_id")},
-            inverseJoinColumns = {@JoinColumn(name = "person_id")})
-    private List<Person> employees;
+    @ManyToMany(mappedBy = "jobs")
+    private List<Person> employees = new ArrayList<>();
 
     @Column
     private String strategy;
@@ -49,6 +48,14 @@ public class Job extends BaseEntity {
         this.employees = employees;
     }
 
+    public void addEmployee(Person person) {
+        if (employees.contains(person)) {
+            return;
+        }
+//        person.addJob(this);
+        employees.add(person);
+    }
+
     public String getStrategy() {
         return strategy;
     }
@@ -56,4 +63,5 @@ public class Job extends BaseEntity {
     public void setStrategy(String strategy) {
         this.strategy = strategy;
     }
+
 }
