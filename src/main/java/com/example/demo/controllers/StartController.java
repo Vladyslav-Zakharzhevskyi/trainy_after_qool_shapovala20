@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping("api/")
+@RequestMapping("/api")
 public class StartController {
 
     @Autowired
     private BaseActionRepository<BaseActivity> activityBaseActionRepository;
 
-    @RequestMapping(value = "initactivity", method = RequestMethod.POST)
+    @RequestMapping(value = "/initactivity", method = RequestMethod.POST)
     public ResponseEntity<String> initActivity() {
         WatchTV watchTV = new WatchTV("Dva Papi", 2.00);
         activityBaseActionRepository.save(watchTV);

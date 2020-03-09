@@ -5,7 +5,7 @@ create table persons
     last_name  varchar(20),
     age        integer     not null,
     salary     real        not null,
-    currency   varchar(3),
+    currency   varchar(3)  not null ,
 
     constraint persons_id primary key (id)
 );
