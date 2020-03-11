@@ -2,9 +2,10 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './appconfig/app-routing.module';
 import { AppComponent } from './app.component';
 import { PersonsComponent } from './persons/persons.component';
+import { AppMaterialModule} from './resourceconfig/angular-material-module';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { PersonsComponent } from './persons/persons.component';
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AppMaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]

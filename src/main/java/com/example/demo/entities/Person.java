@@ -30,7 +30,7 @@ public class Person extends BaseEntity {
     @Column
     private Integer age;
 
-    @OneToMany(mappedBy = "person", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     private List<Address> addresses = new ArrayList<>();
 
     @LazyCollection(LazyCollectionOption.FALSE)

@@ -7,6 +7,7 @@ import com.example.demo.repository.PersonRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,6 +30,7 @@ public class PersonsController {
 
 
     @RequestMapping(value = "/persons", method = RequestMethod.GET)
+    @Transactional
     public List<PersonDto> getPersons(){
 
         // Retrieve persons to show only purpose

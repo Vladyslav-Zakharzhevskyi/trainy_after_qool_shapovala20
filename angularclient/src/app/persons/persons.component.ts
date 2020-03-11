@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from "../api.service";
+import { ApiPersonService } from "../api/api.person.service";
 
 @Component({
   selector: 'app-persons',
@@ -7,11 +7,14 @@ import { ApiService } from "../api.service";
   styleUrls: ['./persons.component.css']
 })
 export class PersonsComponent implements OnInit {
+
   public persons: Object;
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiPersonService) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  getPersons(): void {
     this.apiService.getPersons().subscribe((data) => {
       this.persons = data;
     });
