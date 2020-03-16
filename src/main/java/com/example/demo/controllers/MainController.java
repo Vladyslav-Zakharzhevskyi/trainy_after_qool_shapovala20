@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+
 import com.example.demo.entities.mappedsuperclass.BaseActivity;
 import com.example.demo.entities.mappedsuperclass.Development;
 import com.example.demo.entities.mappedsuperclass.MeetFriend;
@@ -12,13 +13,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping("/api")
-public class StartController {
+public class MainController {
 
     @Autowired
     private BaseActionRepository<BaseActivity> activityBaseActionRepository;
 
-    @RequestMapping(value = "/initactivity", method = RequestMethod.POST)
+
+    @RequestMapping(value = "/")
+    public String welcomeMessage() {
+        return "home";
+    }
+
+    @RequestMapping(value = "/api/initactivity", method = RequestMethod.POST)
     public ResponseEntity<String> initActivity() {
         WatchTV watchTV = new WatchTV("Dva Papi", 2.00);
         activityBaseActionRepository.save(watchTV);
@@ -31,6 +37,5 @@ public class StartController {
 
         return ResponseEntity.ok("Default MappedSuperclass created!");
     }
-
 
 }
