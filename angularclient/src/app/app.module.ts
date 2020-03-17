@@ -7,8 +7,9 @@ import { AppComponent } from './app.component';
 import { PersonsComponent } from './ui/persons/persons.component';
 import { AppMaterialModule} from './resourceconfig/angular-material-module';
 import { NavHeaderComponent } from './ui/nav-header/nav-header.component';
-import { StartComponent } from './ui/start/start.component';
-import {MatMenuModule} from "@angular/material/menu";
+import { StartComponent } from './ui/app-rental/start.component';
+import { MatMenuModule } from "@angular/material/menu";
+import { MatTabsModule } from "@angular/material/tabs";
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {MatMenuModule} from "@angular/material/menu";
     HttpClientModule,
     AppRoutingModule,
     AppMaterialModule,
-    MatMenuModule
+    MatMenuModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
