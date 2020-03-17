@@ -1,0 +1,28 @@
+<body>
+
+<img src="./assets/images/main.svg" alt="logo" class="main-logo">
+
+<button name="more-btn" class="more-btn" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+  <mat-icon>more_vert</mat-icon>
+</button>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item>
+    <mat-icon>info</mat-icon>
+    <span>What we are doing</span>
+  </button>
+  <button mat-menu-item>
+    <mat-icon>copyright</mat-icon>
+    <span>Author info</span>
+  </button>
+</mat-menu>
+
+
+<div class="container">
+
+  <div name="centered-container" class="main-actions-container">
+    <button mat-raised-button class="add-advertisement-btn" color="primary">Add Advertisement</button>
+    <button mat-raised-button class="login-btn" color="primary">Login as a Member</button>
+  </div>
+
+</div>
+</body>
