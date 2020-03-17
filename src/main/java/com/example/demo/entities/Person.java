@@ -1,7 +1,5 @@
 package com.example.demo.entities;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -10,7 +8,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -23,13 +20,13 @@ import java.util.List;
 @Table(name = "persons")
 public class Person extends BaseEntity {
 
-    @Column
+    @Column(name = "first_name", columnDefinition = "varchar(20)", nullable = false)
     private String firstName;
 
-    @Column
+    @Column(name = "last_name", columnDefinition = "varchar(20)", nullable = false)
     private String lastName;
 
-    @Column
+    @Column(name = "age", columnDefinition = "integer", nullable = false)
     private Integer age;
 
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
@@ -42,9 +39,10 @@ public class Person extends BaseEntity {
                     inverseJoinColumns = {@JoinColumn(name = "job_id")})
     private List<Job> jobs = new ArrayList<>();
 
-    @Column
+    @Column(name = "salary", columnDefinition = "double precision", nullable = false)
     private Double salary;
 
+    @Column(name = "currency", columnDefinition = "varchar(3)", nullable = false)
     @Enumerated(EnumType.STRING)
     private Currency currency;
 

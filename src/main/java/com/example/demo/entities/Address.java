@@ -13,15 +13,16 @@ import javax.persistence.Table;
 @Table(name = "addresses")
 public class Address extends BaseEntity {
 
-    @Column
+    @Column(name = "city", columnDefinition = "varchar(100)", nullable = false)
     private String city;
 
-    @Column
+    @Column(name = "street", columnDefinition = "varchar(100)", nullable = false)
     private String street;
 
-    @Column
+    @Column(name = "building_num", columnDefinition = "varchar(10)", nullable = false)
     private String buildingNum;
 
+    @Column(name = "address_type", columnDefinition = "varchar(15)", nullable = false)
     @Enumerated(EnumType.STRING)
     private AddressType addressType;
 

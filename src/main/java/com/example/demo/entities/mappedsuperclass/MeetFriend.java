@@ -8,10 +8,10 @@ import javax.persistence.Table;
 @Table(name = "activity_meet_friend")
 public class MeetFriend extends BaseActivity {
 
-    @Column(name = "person_name")
+    @Column(name = "person_name", columnDefinition = "varchar(100)", nullable = false)
     private String friendName;
 
-    @Column
+    @Column(name = "address", columnDefinition = "varchar(100)", nullable = false)
     private String address;
 
     public MeetFriend() {}

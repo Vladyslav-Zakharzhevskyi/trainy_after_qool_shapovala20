@@ -6,10 +6,10 @@ import javax.persistence.*;
 @Table(name = "activity_watching_tv")
 public class WatchTV extends BaseActivity {
 
-    @Column
+    @Column(name = "name", columnDefinition = "varchar(100)", nullable = false)
     private String name;
 
-    @Column
+    @Column(name = "appraisal_value", columnDefinition = "integer")
     private Integer appraisalValue = 0;
 
     public WatchTV() {}

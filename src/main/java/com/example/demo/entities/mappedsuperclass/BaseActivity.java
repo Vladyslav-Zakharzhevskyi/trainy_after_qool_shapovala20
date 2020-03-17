@@ -7,7 +7,7 @@ import javax.persistence.*;
 @MappedSuperclass
 public abstract class BaseActivity extends BaseEntity {
 
-    @Column(name = "duration")
+    @Column(name = "duration", columnDefinition = "double precision", nullable = false)
     private Double duration;
 
     public BaseActivity() {}

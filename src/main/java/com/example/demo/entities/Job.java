@@ -9,17 +9,17 @@ import java.util.Objects;
 @Table(name = "jobs")
 public class Job extends BaseEntity {
 
-    @Column
+    @Column(name = "position", columnDefinition = "varchar(100)", nullable = false)
     private String position;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    @JoinColumn(name = "address_id", referencedColumnName = "id", nullable = false)
     private Address address;
 
     @ManyToMany(mappedBy = "jobs")
     private List<Person> employees = new ArrayList<>();
 
-    @Column
+    @Column(name = "strategy", columnDefinition = "varchar(255)")
     private String strategy;
 
     public Job() {}
