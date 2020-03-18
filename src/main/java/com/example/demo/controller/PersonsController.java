@@ -1,8 +1,8 @@
-package com.example.demo.controllers;
+package com.example.demo.controller;
 
 import com.example.demo.converter.PersonDtoConverter;
 import com.example.demo.dto.PersonDto;
-import com.example.demo.entities.Person;
+import com.example.demo.entity.Person;
 import com.example.demo.repository.PersonRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

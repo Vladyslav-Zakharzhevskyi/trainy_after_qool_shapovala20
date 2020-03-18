@@ -1,7 +1,7 @@
 package com.example.demo.converter;
 
 import com.example.demo.dto.JobDto;
-import com.example.demo.entities.Job;
+import com.example.demo.entity.Job;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

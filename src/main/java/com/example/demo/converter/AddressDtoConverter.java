@@ -1,7 +1,7 @@
 package com.example.demo.converter;
 
 import com.example.demo.dto.AddressDto;
-import com.example.demo.entities.Address;
+import com.example.demo.entity.Address;
 
 import java.util.List;
 

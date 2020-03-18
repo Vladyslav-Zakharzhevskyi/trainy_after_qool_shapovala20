@@ -1,7 +1,7 @@
 package com.example.demo.converter;
 
 import com.example.demo.dto.PersonDto;
-import com.example.demo.entities.Person;
+import com.example.demo.entity.Person;
 
 import java.util.List;
 

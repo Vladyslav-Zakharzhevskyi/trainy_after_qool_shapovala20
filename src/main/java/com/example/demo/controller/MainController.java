@@ -1,10 +1,10 @@
-package com.example.demo.controllers;
+package com.example.demo.controller;
 
 
-import com.example.demo.entities.mappedsuperclass.BaseActivity;
-import com.example.demo.entities.mappedsuperclass.Development;
-import com.example.demo.entities.mappedsuperclass.MeetFriend;
-import com.example.demo.entities.mappedsuperclass.WatchTV;
+import com.example.demo.entity.mappedsuperclass.BaseActivity;
+import com.example.demo.entity.mappedsuperclass.Development;
+import com.example.demo.entity.mappedsuperclass.MeetFriend;
+import com.example.demo.entity.mappedsuperclass.WatchTV;
 import com.example.demo.repository.BaseActionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

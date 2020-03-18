@@ -1,11 +1,11 @@
 package com.example.demo;
 
-import com.example.demo.entities.Address;
-import com.example.demo.entities.AddressType;
-import com.example.demo.entities.BaseEntity;
-import com.example.demo.entities.Currency;
-import com.example.demo.entities.Job;
-import com.example.demo.entities.Person;
+import com.example.demo.entity.Address;
+import com.example.demo.entity.AddressType;
+import com.example.demo.entity.BaseEntity;
+import com.example.demo.entity.Currency;
+import com.example.demo.entity.Job;
+import com.example.demo.entity.Person;
 import com.example.demo.repository.AddressRepository;
 import com.example.demo.repository.JobRepository;
 import com.example.demo.repository.PersonRepository;

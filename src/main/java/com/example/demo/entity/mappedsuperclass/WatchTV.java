@@ -1,4 +1,4 @@
-package com.example.demo.entities.mappedsuperclass;
+package com.example.demo.entity.mappedsuperclass;
 
 import javax.persistence.*;
 
