@@ -1,30 +1,3 @@
-create table activity_development
-(
-    id          uuid             not null,
-    duration    double precision not null,
-    language    varchar(100)     not null,
-    used_device varchar(100)     not null,
-    primary key (id)
-);
-
-create table activity_meet_friend
-(
-    id          uuid             not null,
-    duration    double precision not null,
-    address     varchar(100)     not null,
-    person_name varchar(100)     not null,
-    primary key (id)
-);
-
-create table activity_watching_tv
-(
-    id              uuid             not null,
-    duration        double precision not null,
-    appraisal_value integer,
-    name            varchar(100)     not null,
-    primary key (id)
-);
-
 create table addresses
 (
     id           uuid         not null,
