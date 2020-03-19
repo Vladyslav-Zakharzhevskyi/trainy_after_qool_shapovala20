@@ -1,0 +1,46 @@
+<div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
+  <mat-card class="box">
+    <mat-card-header>
+      <mat-card-title>Register</mat-card-title>
+    </mat-card-header>
+
+    <form class="example-form">
+
+      <mat-card-content>
+        <mat-form-field class="example-full-width">
+          <mat-label>User Name</mat-label>
+          <input matInput name="username" [(ngModel)]="person.username" [formControl]="formValidation.userName" placeholder="Username" required>
+          <mat-error *ngIf="formValidation.userName.invalid">{{getErrorMessage("userName")}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <mat-label>First Name</mat-label>
+          <input matInput name="firstname" [(ngModel)]="person.firstname" [formControl]="formValidation.firstName" placeholder="First Name" required>
+          <mat-error *ngIf="formValidation.firstName.invalid">{{getErrorMessage("firstName")}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <mat-label>Last Name</mat-label>
+          <input matInput name="lastname" [(ngModel)]="person.lastname" [formControl]="formValidation.lastName" placeholder="Last Name" required>
+          <mat-error *ngIf="formValidation.lastName.invalid">{{getErrorMessage("lastName")}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <mat-label>Email</mat-label>
+          <input matInput name="email" [(ngModel)]="person.email" [formControl]="formValidation.email" placeholder="Email" required>
+          <mat-error *ngIf="formValidation.email.invalid">{{getErrorMessage("email")}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <mat-label>Password</mat-label>
+          <input matInput name="password" type="password" [(ngModel)]="person.password" [formControl]="formValidation.password" placeholder="Password" required>
+          <mat-error *ngIf="formValidation.password.invalid">{{getErrorMessage("password")}}</mat-error>
+        </mat-form-field>
+
+      </mat-card-content>
+
+      <button mat-stroked-button (click)="doRegistrationForPerson()" color="primary" class="btn-block">Register</button>
+
+    </form>
+  </mat-card>
+</div>

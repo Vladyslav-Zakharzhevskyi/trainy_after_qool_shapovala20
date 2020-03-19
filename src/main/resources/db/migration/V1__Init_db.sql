@@ -47,14 +47,18 @@ create table jobs
 
 create table persons
 (
-    id         uuid             not null,
-    age        integer          not null,
-    currency   varchar(3)       not null,
-    first_name varchar(20)      not null,
-    last_name  varchar(20)      not null,
-    salary     double precision not null,
+    id         uuid        not null,
+    user_name  varchar(20) not null,
+    first_name varchar(20) not null,
+    last_name  varchar(20) not null,
+    password   varchar(60) not null,
+    age        integer,
+    salary     double precision,
+    currency   varchar(3),
     primary key (id)
 );
+
+
 
 
 create table persons_has_jobs

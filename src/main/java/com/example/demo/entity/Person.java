@@ -20,13 +20,19 @@ import java.util.List;
 @Table(name = "persons")
 public class Person extends BaseEntity {
 
+    @Column(name = "user_name", columnDefinition = "varchar(20)", nullable = false)
+    private String userName;
+
     @Column(name = "first_name", columnDefinition = "varchar(20)", nullable = false)
     private String firstName;
 
     @Column(name = "last_name", columnDefinition = "varchar(20)", nullable = false)
     private String lastName;
 
-    @Column(name = "age", columnDefinition = "integer", nullable = false)
+    @Column(name = "password", columnDefinition = "varchar(60)", nullable = false)
+    private String password;
+
+    @Column(name = "age", columnDefinition = "integer")
     private Integer age;
 
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
@@ -39,14 +45,22 @@ public class Person extends BaseEntity {
                     inverseJoinColumns = {@JoinColumn(name = "job_id")})
     private List<Job> jobs = new ArrayList<>();
 
-    @Column(name = "salary", columnDefinition = "double precision", nullable = false)
+    @Column(name = "salary", columnDefinition = "double precision")
     private Double salary;
 
-    @Column(name = "currency", columnDefinition = "varchar(3)", nullable = false)
+    @Column(name = "currency", columnDefinition = "varchar(3)")
     @Enumerated(EnumType.STRING)
     private Currency currency;
 
     public Person() {}
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -62,6 +76,14 @@ public class Person extends BaseEntity {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Integer getAge() {

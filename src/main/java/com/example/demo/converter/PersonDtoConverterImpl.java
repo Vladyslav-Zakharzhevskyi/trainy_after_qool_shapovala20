@@ -1,8 +1,10 @@
 package com.example.demo.converter;
 
+import com.example.demo.dto.NewPersonDto;
 import com.example.demo.dto.PersonDto;
 import com.example.demo.entity.Person;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -11,6 +13,8 @@ import java.util.stream.Collectors;
 @Component
 public class PersonDtoConverterImpl implements PersonDtoConverter {
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
     @Autowired
     private AddressDtoConverter addressDtoConverter;
     @Autowired
@@ -31,7 +35,19 @@ public class PersonDtoConverterImpl implements PersonDtoConverter {
                 addressDtoConverter.convert(person.getAddresses(), false),
                 jobDtoConverter.convert(person.getJobs(), false),
                 person.getSalary(),
-                person.getCurrency().name()
+                person.getCurrency() != null ? person.getCurrency().name() : ""
         );
     }
+
+    @Override
+    public Person convert(NewPersonDto newPersonDto) {
+        Person person = new Person();
+        person.setUserName(newPersonDto.getUserName());
+        person.setFirstName(newPersonDto.getFirstName());
+        person.setLastName(newPersonDto.getLastName());
+        person.setPassword(passwordEncoder.encode(newPersonDto.getPassword()));
+
+        return person;
+    }
+
 }
