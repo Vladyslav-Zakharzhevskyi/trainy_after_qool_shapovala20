@@ -1,0 +1,20 @@
+<mat-tab-group mat-align-tabs="center">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="app-tab-icon" aria-hidden="false" aria-label="Rental Application">people_outline</mat-icon>
+      Login
+    </ng-template>
+    <div style="height: 900px">
+      <app-login-form></app-login-form>
+    </div>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <i class="app-tab-icon material-icons">home</i>
+      Registration
+    </ng-template>
+    <div style="height: 900px">
+      <app-registration-form></app-registration-form>
+    </div>
+  </mat-tab>
+</mat-tab-group>
