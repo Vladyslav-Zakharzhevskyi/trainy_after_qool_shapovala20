@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Person} from "../../_models/person";
-import {ApiPersonService} from "../../api/api.person.service";
+import {ApiService} from "../../api/api.service";
 import {FormControl, Validators} from "@angular/forms";
 import {ErrorUtilsService} from "../../util/error-utils.service";
 
@@ -22,7 +22,7 @@ export class RegistrationFormComponent implements OnInit {
   person = new Person();
 
 
-  constructor(private apiService: ApiPersonService, private errorUtils: ErrorUtilsService) { }
+  constructor(private apiService: ApiService, private errorUtils: ErrorUtilsService) { }
 
   ngOnInit(): void {
   }

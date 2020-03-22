@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Person} from "../_models/person";
 import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
-export class ApiPersonService {
+export class ApiService {
 
   constructor(private httpClient: HttpClient) { }
 
@@ -15,9 +15,12 @@ export class ApiPersonService {
   }
 
   public registerPerson(person: Person) : Observable<Person> {
-
-    console.log("Called from api layer", person);
     return this.httpClient.post<Person>('http://localhost:8080/api/person', person);
+  }
+
+  public loginPerson(person: Person): Observable<Person> {
+    let url = "http://localhost:8080/login?username="+person.username+"&password="+person.password;
+    return this.httpClient.post<Person>(url, {});
   }
 
 

@@ -14,9 +14,9 @@ public class NewPersonDto {
 
     @JsonCreator
     public NewPersonDto(@JsonProperty(value = "username", required = true) String userName,
-                        @JsonProperty(value = "firstname", required = true) String firstName,
-                        @JsonProperty(value = "lastname", required = true) String lastName,
-                        @JsonProperty(value = "email", required = true) String email,
+                        @JsonProperty(value = "firstname", required = false) String firstName,
+                        @JsonProperty(value = "lastname", required = false) String lastName,
+                        @JsonProperty(value = "email", required = false) String email,
                         @JsonProperty(value = "password", required = true) String password) {
         this.userName = userName;
         this.firstName = firstName;

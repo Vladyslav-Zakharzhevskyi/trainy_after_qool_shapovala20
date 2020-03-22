@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiPersonService } from "../../api/api.person.service";
+import { ApiService } from "../../api/api.service";
 
 @Component({
   selector: 'app-persons',
@@ -10,7 +10,7 @@ export class PersonsComponent implements OnInit {
 
   public persons: Object;
 
-  constructor(private apiService: ApiPersonService) { }
+  constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {}
 

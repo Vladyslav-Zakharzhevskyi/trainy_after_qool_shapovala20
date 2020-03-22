@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Person} from "../../_models/person";
 import {FormControl, Validators} from "@angular/forms";
 import {ErrorUtilsService} from "../../util/error-utils.service";
+import {ApiService} from "../../api/api.service";
 
 @Component({
   selector: 'app-login-form',
@@ -17,12 +18,22 @@ export class LoginFormComponent implements OnInit {
     password: new FormControl('', [Validators.required])
   };
 
-  constructor(private errorUtilsService: ErrorUtilsService) { }
+  constructor(private errorUtilsService: ErrorUtilsService, private apiService: ApiService) { }
 
   ngOnInit(): void {
   }
 
-  onSubmit() {}
+  onSubmit() {
+    if (this.formValidation.password.invalid && this.formValidation.userName.invalid) {
+      return;
+    }
+    this.apiService.loginPerson(this.person).subscribe(
+      response => {
+        console.log("user has been logged in, check spring part");
+      }
+    );
+
+  }
 
   getErrorMessage(key: string): string {
     return this.errorUtilsService.extractErrorMessage(this.formValidation, key);
