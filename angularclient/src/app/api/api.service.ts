@@ -15,7 +15,7 @@ export class ApiService {
   }
 
   public registerPerson(person: Person) : Observable<Person> {
-    return this.httpClient.post<Person>('http://localhost:8080/api/person', person);
+    return this.httpClient.post<Person>('http://localhost:8080/api/person/register', person);
   }
 
   public loginPerson(person: Person): Observable<Person> {

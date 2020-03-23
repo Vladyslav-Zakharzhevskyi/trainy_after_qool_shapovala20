@@ -34,7 +34,7 @@ public class PersonsController {
     @Autowired
     private PersonService personService;
 
-    @RequestMapping(value = "/person", method = RequestMethod.POST)
+    @RequestMapping(value = "/person/register", method = RequestMethod.POST)
     public ResponseEntity<PersonDto> registerPerson(@RequestBody NewPersonDto newPersonDto) {
         Person person = personDtoConverter.convert(newPersonDto);
 

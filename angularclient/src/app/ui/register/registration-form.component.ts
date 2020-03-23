@@ -3,6 +3,9 @@ import {Person} from "../../_models/person";
 import {ApiService} from "../../api/api.service";
 import {FormControl, Validators} from "@angular/forms";
 import {ErrorUtilsService} from "../../util/error-utils.service";
+import {AppRootComponent} from "../../app.root.component";
+import {SnackBarService} from "../../service/snack-bar.service";
+import {JoinComponent} from "../join/join.component";
 
 @Component({
   selector: 'app-registration-form',
@@ -22,13 +25,19 @@ export class RegistrationFormComponent implements OnInit {
   person = new Person();
 
 
-  constructor(private apiService: ApiService, private errorUtils: ErrorUtilsService) { }
+  constructor(private apiService: ApiService,
+              private errorUtils: ErrorUtilsService,
+              private snackBarService: SnackBarService,
+              private joinComponent: JoinComponent) { }
 
   ngOnInit(): void {
   }
 
   doRegistrationForPerson(): void {
-    this.apiService.registerPerson(this.person).subscribe();
+    this.apiService.registerPerson(this.person).subscribe(resp => {
+      this.snackBarService.showSnackBar("You have registered successfully", "info", 4000);
+      this.joinComponent.selectedTab(0);
+    });
   }
 
   getErrorMessage(key: string): string {

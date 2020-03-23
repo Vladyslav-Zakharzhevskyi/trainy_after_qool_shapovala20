@@ -11,7 +11,10 @@ import { RegistrationFormComponent } from './ui/register/registration-form.compo
 import { LoginFormComponent } from "./ui/login/login-form.component";
 
 import { AppFlatRentalComponent } from './ui/app-rental/app-flat-rental.component';
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { JoinComponent } from './ui/join/join.component';
+
 
 @NgModule({
   declarations: [
@@ -20,7 +23,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     NavHeaderComponent,
     AppFlatRentalComponent,
     RegistrationFormComponent,
-    LoginFormComponent
+    LoginFormComponent,
+    JoinComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +32,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     AppRoutingModule,
     AppMaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppRootComponent]

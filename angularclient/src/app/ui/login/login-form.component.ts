@@ -3,6 +3,7 @@ import {Person} from "../../_models/person";
 import {FormControl, Validators} from "@angular/forms";
 import {ErrorUtilsService} from "../../util/error-utils.service";
 import {ApiService} from "../../api/api.service";
+import {SnackBarService} from "../../service/snack-bar.service";
 
 @Component({
   selector: 'app-login-form',
@@ -18,7 +19,9 @@ export class LoginFormComponent implements OnInit {
     password: new FormControl('', [Validators.required])
   };
 
-  constructor(private errorUtilsService: ErrorUtilsService, private apiService: ApiService) { }
+  constructor(private errorUtilsService: ErrorUtilsService,
+              private apiService: ApiService,
+              protected snackBarService: SnackBarService) { }
 
   ngOnInit(): void {
   }
@@ -28,8 +31,11 @@ export class LoginFormComponent implements OnInit {
       return;
     }
     this.apiService.loginPerson(this.person).subscribe(
-      response => {
-        console.log("user has been logged in, check spring part");
+      success => {
+        this.snackBarService.showSnackBar("Successful login!", "success", 4000);
+      },
+      error => {
+        this.snackBarService.showSnackBar("Login has been failed!", "error", 4000);
       }
     );
 
