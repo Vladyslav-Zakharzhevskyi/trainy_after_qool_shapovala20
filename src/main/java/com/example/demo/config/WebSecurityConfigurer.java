@@ -3,7 +3,6 @@ package com.example.demo.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,10 +10,14 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private AuthenticationSuccessHandler authenticationSuccessHandler;
 
     @Autowired
     private UserDetailsService authenticationUserDetailsService;
@@ -28,16 +31,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                        .antMatchers("/login").permitAll()
-                        .antMatchers( "/api/person/register").permitAll()
-                        .anyRequest()
-                        .authenticated()
+                    .antMatchers("/do-login").permitAll()
+                    .antMatchers( "/api/person/register").permitAll()
+                    .anyRequest()
+                    .authenticated()
                 .and()
                     .formLogin()
-                    .loginProcessingUrl("/login")
+                    .successHandler(authenticationSuccessHandler)
+                    .loginProcessingUrl("/do-login")
                     .usernameParameter("username")
                     .passwordParameter("password")
-                    .successForwardUrl("/home");
+                .and()
+                    .logout()
+                    .logoutUrl("/logout")
+                    .invalidateHttpSession(true);
 
     }
 
@@ -59,6 +66,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public BCryptPasswordEncoder createPasswordEncoder() {
         return new BCryptPasswordEncoder(8);
     }
-
 
 }

@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {AppFlatRentalComponent} from "../ui/app-rental/app-flat-rental.component";
+import {AppFlatRentalComponent} from "./ui/app-rental/app-flat-rental.component";
 import {BrowserModule} from "@angular/platform-browser";
-import {JoinComponent} from "../ui/join/join.component";
+import {JoinComponent} from "./ui/join/join.component";
 
 
 const routes: Routes = [
@@ -13,8 +13,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [ BrowserModule, RouterModule.forRoot(
-      routes,
-      { enableTracing: true })
+      routes)
   ],
   exports: [RouterModule]
 })
