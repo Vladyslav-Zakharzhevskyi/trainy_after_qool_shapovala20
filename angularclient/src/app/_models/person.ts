@@ -1,8 +1,8 @@
 export class Person {
 
   public username: string;
-  public firstname: string;
-  public lastname: string;
+  public firstName: string;
+  public lastName: string;
   public email: string;
   public password: string;
 

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppMaterialModule} from './resourceconfig/angular-material-module';
 import { AppRootComponent } from './app.root.component';
@@ -14,6 +14,7 @@ import { AppFlatRentalComponent } from './ui/app-rental/app-flat-rental.componen
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { JoinComponent } from './ui/join/join.component';
+import { AuthInterceptor } from "./api/auth-interceptor/auth-interceptor.service";
 
 
 @NgModule({
@@ -35,7 +36,11 @@ import { JoinComponent } from './ui/join/join.component';
     ReactiveFormsModule,
     MatSnackBarModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true }],
+
   bootstrap: [AppRootComponent]
 })
 export class AppRootModule { }

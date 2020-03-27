@@ -35,6 +35,10 @@ public class JWTUtils {
                 .compact();
     }
 
+    public String getUserNameFromJwtToken(String token) {
+        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+    }
+
     public boolean checkJwtTokenCorrectness(String token) {
         try {
             Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);

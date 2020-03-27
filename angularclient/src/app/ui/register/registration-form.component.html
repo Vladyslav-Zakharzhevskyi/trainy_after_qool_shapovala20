@@ -15,13 +15,13 @@
 
         <mat-form-field class="example-full-width">
           <mat-label>First Name</mat-label>
-          <input matInput name="firstname" [(ngModel)]="person.firstname" [formControl]="formValidation.firstName" placeholder="First Name" required>
+          <input matInput name="firstname" [(ngModel)]="person.firstName" [formControl]="formValidation.firstName" placeholder="First Name" required>
           <mat-error *ngIf="formValidation.firstName.invalid">{{getErrorMessage("firstName")}}</mat-error>
         </mat-form-field>
 
         <mat-form-field class="example-full-width">
           <mat-label>Last Name</mat-label>
-          <input matInput name="lastname" [(ngModel)]="person.lastname" [formControl]="formValidation.lastName" placeholder="Last Name" required>
+          <input matInput name="lastname" [(ngModel)]="person.lastName" [formControl]="formValidation.lastName" placeholder="Last Name" required>
           <mat-error *ngIf="formValidation.lastName.invalid">{{getErrorMessage("lastName")}}</mat-error>
         </mat-form-field>
 

@@ -6,6 +6,7 @@ import {ApiService} from "../../api/api.service";
 import {SnackBarService} from "../../service/snack-bar.service";
 import {Router} from "@angular/router";
 import {JWTTokenProvider} from "../../service/jwt-token-provider.service";
+import {ContextService} from "../../service/context.service";
 
 @Component({
   selector: 'app-login-form',
@@ -25,7 +26,8 @@ export class LoginFormComponent implements OnInit {
               private apiService: ApiService,
               protected snackBarService: SnackBarService,
               private router: Router,
-              private authProvider: JWTTokenProvider) { }
+              private authProvider: JWTTokenProvider,
+              private context: ContextService) { }
 
   ngOnInit(): void {
   }
@@ -36,22 +38,20 @@ export class LoginFormComponent implements OnInit {
     }
     this.apiService.loginPerson(this.person).subscribe(
       response => {
-            // display its headers
-        //     const keys = response.headers.keys();
-        //     let headers = keys.map(key =>
-        //       `${key}: ${response.headers.get(key)}`);
-        // console.log(headers);
-
-        // this.authProvider.saveJWTToken(data.accessToken);
-        // this.authProvider.authenticate();
+        this.context.setAccessToken(this.person, response);
         this.snackBarService.showSnackBar("Successful login!", "success", 4000);
-        // this.router.navigate(['/app/rental']);
+        this.getCurrentLoggedInUser();
       },
       error => {
         this.snackBarService.showSnackBar("Login has been failed!", "error", 4000);
       }
     );
+  }
 
+  getCurrentLoggedInUser(): void {
+    this.apiService.getCurrentPerson().then(r =>
+      this.router.navigate(['/app/rental'])
+    );
   }
 
   getErrorMessage(key: string): string {

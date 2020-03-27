@@ -23,10 +23,10 @@ public class MyCorsFilter extends OncePerRequestFilter {
 
         response.addHeader("Access-Control-Allow-Origin", determineOrigin(request));
         response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, OPTIONS, DELETE");
-        response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type");
-        response.setHeader("Access-Control-Allow-Credentials", "false");
-        response.setHeader("Access-Control-Expose-Headers", "Authentication");
-        response.setHeader("Access-Control-Max-Age", "3600");
+        response.addHeader("Access-Control-Allow-Headers", "Authentication, Authorization, Content-Type");
+        response.addHeader("Access-Control-Allow-Credentials", "false");
+        response.addHeader("Access-Control-Expose-Headers", "Authentication, Authorization");
+        response.addHeader("Access-Control-Max-Age", "3600");
 
         if (!request.getMethod().equals("OPTIONS")) {
             filterChain.doFilter(request, response);
