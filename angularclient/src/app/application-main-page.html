@@ -1,0 +1,29 @@
+<div id='application' data-name='application-wrapper'>
+
+  <div id="application-header" data-name="application-header-wrapper" *ngIf="userIsLoggedIn">
+    <mat-toolbar color="primary" class="mat-elevation-z3">
+
+      <mat-toolbar-row>
+<!--        <button mat-icon-button>-->
+<!--          <mat-icon (click)="sidenav.toggle()">menu</mat-icon>-->
+<!--        </button>-->
+        <h1>SimpleCRM</h1>
+        <span class="menu-spacer"></span>
+        <div id="header">
+          <a mat-button [routerLink]="'/accounts'"> Accounts </a>
+          <a mat-button [routerLink]="'/create-account'"> Create Account </a>
+          <a mat-button [routerLink]="'/contacts'"> Contacts </a>
+          <a mat-button [routerLink]="'/create-contact'"> Create Contact </a>
+          <a mat-button [routerLink]="'/activities'"> Activities </a>
+          <a mat-button [routerLink]="'/create-activity'"> Create Activity </a>
+          <a mat-button (click)="logout()" class="logout-btn">Logout</a>
+        </div>
+      </mat-toolbar-row>
+    </mat-toolbar>
+  </div>
+
+  <div id="application-content" data-name="application-content-wrapper">
+    <router-outlet></router-outlet>
+  </div>
+
+</div>

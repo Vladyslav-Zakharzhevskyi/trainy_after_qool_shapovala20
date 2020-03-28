@@ -11,6 +11,7 @@ export class ContextService {
   public JWT_TOKEN: string = "auth_token";
   public JWT_HEADER_NAME: string = "Authentication";
   public CURRENT_USER: string = "auth_user";
+  public USER_IS_LOGGED_IN = "auth_user_is_logged_in";
   public APP_SETTINGS_KEY: string = "application_settings";
 
   constructor() {}
@@ -18,6 +19,7 @@ export class ContextService {
   public authenticate(person: Person) {
     window.sessionStorage.removeItem(this.CURRENT_USER);
     window.sessionStorage.setItem(this.CURRENT_USER, JSON.stringify(person));
+    this.setUserIsLoggedIn(true);
   }
 
   public setAccessToken(person: Person, resp: HttpResponse<Person>) {
@@ -59,5 +61,18 @@ export class ContextService {
     return JSON.parse(window.sessionStorage.getItem(this.CURRENT_USER));
   }
 
+  public userIsLoggedIn(): boolean {
+    return JSON.parse(window.sessionStorage.getItem(this.USER_IS_LOGGED_IN));
+  }
+
+  public setUserIsLoggedIn(value: boolean) {
+    window.sessionStorage.setItem(this.USER_IS_LOGGED_IN, JSON.stringify(value));
+  }
+
+  public logout() : void {
+    window.sessionStorage.removeItem(this.CURRENT_USER);
+    window.sessionStorage.removeItem(this.JWT_TOKEN);
+    window.sessionStorage.removeItem(this.USER_IS_LOGGED_IN);
+  }
 
 }

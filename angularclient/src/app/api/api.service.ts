@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {Person} from "../_models/person";
 import {Observable} from "rxjs";
-import {JWTTokenProvider} from "../service/jwt-token-provider.service";
 import {ContextService} from "../service/context.service";
+import {SubjectPoolService} from "../subject-pool.service";
 
 const HOST: string = 'http://localhost:8080';
 
@@ -12,7 +12,7 @@ const HOST: string = 'http://localhost:8080';
 })
 export class ApiService {
 
-  constructor(private httpClient: HttpClient, private context: ContextService) {
+  constructor(private httpClient: HttpClient, private context: ContextService, private subjectPoolService: SubjectPoolService) {
     this.init();
   }
 
@@ -51,6 +51,7 @@ export class ApiService {
         .then((res: Person) => {
             // Success
             this.context.authenticate(res);
+            this.subjectPoolService.triggerSubject(SubjectPoolService.LOGIN_LOGOUT_ACTION, true);
             resolve();
           },
           err => {
@@ -60,6 +61,10 @@ export class ApiService {
         );
     });
     return promise;
+  }
+
+  public logout(): Observable<Object> {
+    return this.httpClient.get(HOST + "/logout");
   }
 
 
