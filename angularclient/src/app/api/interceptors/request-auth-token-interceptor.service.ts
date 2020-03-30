@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {ContextService} from "../../service/context.service";
 
 @Injectable()
-export class AuthInterceptor implements HttpInterceptor {
+export class RequestAuthTokenInterceptor implements HttpInterceptor {
 
   constructor(private context: ContextService) {}
 
@@ -16,6 +16,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
       let jwtToken = this.context.getAccessToken();
       if (jwtToken != null) {
+        // Add auth token to header
         request = request.clone({headers: request.headers.set(this.context.getAuthenticationHeader(), jwtToken)})
       }
       return next.handle(request);

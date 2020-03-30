@@ -9,13 +9,13 @@
       <mat-card-content>
         <mat-form-field class="example-full-width">
           <mat-label>User Name</mat-label>
-          <input matInput name="username" [(ngModel)]="person.username" [formControl]="formValidation.userName" placeholder="Enter Username" required>
+          <input matInput name="username" [(ngModel)]="person.username" [formControl]="formValidation.userName" placeholder="Enter Username">
           <mat-error *ngIf="formValidation.userName.invalid">{{getErrorMessage("userName")}}</mat-error>
         </mat-form-field>
 
         <mat-form-field class="example-full-width">
           <mat-label>Password</mat-label>
-          <input matInput name="password" type="password" [(ngModel)]="person.password" [formControl]="formValidation.password" placeholder="Enter Password" required>
+          <input matInput name="password" type="password" [(ngModel)]="person.password" [formControl]="formValidation.password" placeholder="Enter Password">
           <mat-error *ngIf="formValidation.password.invalid">{{getErrorMessage("password")}}</mat-error>
         </mat-form-field>
       </mat-card-content>

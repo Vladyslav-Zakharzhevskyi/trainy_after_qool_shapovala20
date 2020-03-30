@@ -7,6 +7,8 @@ import {SnackBarService} from "../../service/snack-bar.service";
 import {Router} from "@angular/router";
 import {JWTTokenProvider} from "../../service/jwt-token-provider.service";
 import {ContextService} from "../../service/context.service";
+import {SubjectPoolService} from "../../subject-pool.service";
+import {AuthenticationStateService} from "../../service/subjects/authentication-state.service";
 
 @Component({
   selector: 'app-login-form',
@@ -24,6 +26,7 @@ export class LoginFormComponent implements OnInit {
 
   constructor(private errorUtilsService: ErrorUtilsService,
               private apiService: ApiService,
+              private authState: AuthenticationStateService,
               protected snackBarService: SnackBarService,
               private router: Router,
               private authProvider: JWTTokenProvider,
@@ -49,8 +52,11 @@ export class LoginFormComponent implements OnInit {
   }
 
   getCurrentLoggedInUser(): void {
-    this.apiService.getCurrentPerson().then(r =>
-      this.router.navigate(['/app/rental'])
+    this.apiService.getCurrentPerson().subscribe(person => {
+        this.context.authenticate(person);
+        this.authState.setState(true);
+        this.router.navigate(['/app/rental'])
+      }
     );
   }
 

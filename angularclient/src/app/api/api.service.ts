@@ -12,21 +12,18 @@ const HOST: string = 'http://localhost:8080';
 })
 export class ApiService {
 
-  constructor(private httpClient: HttpClient, private context: ContextService, private subjectPoolService: SubjectPoolService) {
-    this.init();
-  }
+  private static SKIP_INTERCEPTOR_HEADER = new HttpHeaders().set('InterceptorSkipHeader', 'SKIP_HEADER');
 
-  public init() {
-    this.getApplicationSettings().subscribe(applicationSettings => {
-      if (applicationSettings != null) {
-        this.context.setApplicationSettings(applicationSettings);
-      }
-    });
-  }
+  constructor(private httpClient: HttpClient) {}
+
 
   public getApplicationSettings():Observable<any>  {
-    const headers = new HttpHeaders().set('InterceptorSkipHeader', '');
-    return this.httpClient.get<any>(HOST + "/api/getApplicationSettings", { headers });
+    return this.httpClient.get<any>(HOST + "/api/getApplicationSettings", { headers: ApiService.SKIP_INTERCEPTOR_HEADER });
+  }
+
+  public loginPerson(person: Person): Observable<HttpResponse<Person>>  {
+    let url = HOST + '/api/person/do-login?username=' + person.username + "&password=" + person.password;
+    return this.httpClient.post<Person>(url,{}, { observe: 'response' });
   }
 
   public getPersons(){
@@ -37,30 +34,8 @@ export class ApiService {
     return this.httpClient.post<Person>(HOST + '/api/person/register', person);
   }
 
-  public loginPerson(person: Person): Observable<HttpResponse<Person>>  {
-    let url = HOST + '/do-login?username=' + person.username + "&password=" + person.password;
-    return this.httpClient.post<Person>(url,{}, { observe: 'response' });
-  }
-
-  public getCurrentPerson(): Promise<Person> {
-    const promise = new Promise<Person>((resolve, reject) => {
-      const apiURL = HOST + '/api/person/current';
-      this.httpClient
-        .post<Person>(apiURL, {})
-        .toPromise()
-        .then((res: Person) => {
-            // Success
-            this.context.authenticate(res);
-            this.subjectPoolService.triggerSubject(SubjectPoolService.LOGIN_LOGOUT_ACTION, true);
-            resolve();
-          },
-          err => {
-            // Error
-            reject(err);
-          }
-        );
-    });
-    return promise;
+  public getCurrentPerson(): Observable<Person> {
+    return this.httpClient.get<Person>(HOST + '/api/person/current');
   }
 
   public logout(): Observable<Object> {

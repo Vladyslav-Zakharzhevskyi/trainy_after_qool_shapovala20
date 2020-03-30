@@ -47,7 +47,7 @@ public class PersonsController {
         return ResponseEntity.ok(personDtoConverter.convert(savedPerson));
     }
 
-    @RequestMapping(value = "/person/current", method = RequestMethod.POST)
+    @RequestMapping(value = "/person/current", method = RequestMethod.GET   )
     public PersonDto getCurrentLoggedInUser(@AuthenticationPrincipal(errorOnInvalidType = true) User user) {
         Optional<Person> personByUserName = personRepository.findPersonByUserName(user.getUsername());
         Person person = personByUserName.orElseThrow(() -> new UsernameNotFoundException("User with username has not found"));

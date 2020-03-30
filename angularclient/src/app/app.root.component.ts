@@ -1,9 +1,10 @@
 import {Component} from '@angular/core';
-import { Subject } from 'rxjs'
 import {SubjectPoolService} from "./subject-pool.service";
 import {ContextService} from "./service/context.service";
 import {ApiService} from "./api/api.service";
 import {Router} from "@angular/router";
+import {AuthenticationStateService} from "./service/subjects/authentication-state.service";
+import {SnackBarService} from "./service/snack-bar.service";
 
 @Component({
   selector: 'app-root',
@@ -14,25 +15,45 @@ export class AppRootComponent {
 
   public userIsLoggedIn: boolean = false;
 
-  constructor(private router: Router, private context: ContextService, private subjectPoolService: SubjectPoolService, private api: ApiService) {
-    this.userIsLoggedIn = context.userIsLoggedIn();
-    this.createAndSubscribeToLoggedInAction();
+  constructor(private router: Router,
+              private context: ContextService,
+              private subjectPoolService: SubjectPoolService,
+              private authState: AuthenticationStateService,
+              private snackBarService: SnackBarService,
+              private api: ApiService) {
+    this.init();
+    this.initLoginLogout();
   }
 
-  private createAndSubscribeToLoggedInAction(): void {
-    let loggedInSubject$ = new Subject<boolean>();
-    loggedInSubject$.subscribe(loginLogout => {
-      console.log("User logged in: " + loginLogout);
-      this.userIsLoggedIn = loginLogout;
+  private init() {
+    this.userIsLoggedIn = this.context.userIsLoggedIn();
+    // Get application settings
+    this.getApplicationSettings();
+  }
+
+  private getApplicationSettings() {
+    this.api.getApplicationSettings().subscribe(applicationSettings => {
+      if (applicationSettings != null) {
+        this.context.setApplicationSettings(applicationSettings);
+      }
     });
-    this.subjectPoolService.addSubjectToPool(SubjectPoolService.LOGIN_LOGOUT_ACTION, loggedInSubject$);
+  }
+
+  private initLoginLogout(): void {
+    this.authState.getStateChange().subscribe(isUserAuthenticated => {
+      this.userIsLoggedIn = isUserAuthenticated;
+
+      if (!isUserAuthenticated) {
+        this.context.logout();
+        this.api.logout().subscribe();
+        this.router.navigate(['/login']);
+        this.snackBarService.showSnackBar("Logon has been successful!", "error", 4000);
+      }
+    });
   }
 
   public logout(): void {
-    this.context.logout();
-    this.subjectPoolService.triggerSubject(SubjectPoolService.LOGIN_LOGOUT_ACTION, false);
-    this.api.logout().subscribe();
-    this.router.navigate(['/login'])
+    this.authState.setState(false);
   }
 
 

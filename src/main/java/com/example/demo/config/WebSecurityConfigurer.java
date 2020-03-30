@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configurers.FormLoginConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
@@ -48,29 +49,28 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http
                 .authorizeRequests()
-                    .antMatchers("/do-login").permitAll()
+                    .antMatchers("/api/person/do-login").permitAll()
                     .antMatchers("/api/person/register").permitAll()
                     .antMatchers("/api/getApplicationSettings").permitAll()
                     .anyRequest().authenticated();
 
+        FormLoginConfigurer<HttpSecurity> loginConfigurer = http
+                .formLogin()
+                .loginProcessingUrl("/api/person/do-login");
+
         if (authenticationMethod.equals("basic")) {
 
-            http
-                    .formLogin()
-                    .loginProcessingUrl("/do-login")
+            loginConfigurer
                     .successHandler((request, response, authentication) -> { /*investigate nothing*/ })
                     .and()
-                        .httpBasic();
+                    .httpBasic();
 
         } else if (authenticationMethod.equals("jwt")) {
 
-            http
-                    .formLogin()
-                    .loginProcessingUrl("/do-login")
-                    .successHandler(jwtTokenProvider);
-
-            http.addFilterBefore(new JWTAuthenticationFilter(jwtUtils, authenticationUserDetailsService), SecurityContextHolderAwareRequestFilter.class);
-
+            loginConfigurer
+                    .successHandler(jwtTokenProvider)
+                    .and()
+                    .addFilterBefore(new JWTAuthenticationFilter(jwtUtils, authenticationUserDetailsService), SecurityContextHolderAwareRequestFilter.class);
         }
 
         http

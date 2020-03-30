@@ -14,7 +14,7 @@ import { AppFlatRentalComponent } from './ui/app-rental/app-flat-rental.componen
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { JoinComponent } from './ui/join/join.component';
-import { AuthInterceptor } from "./api/auth-interceptor/auth-interceptor.service";
+import { RequestAuthTokenInterceptor } from "./api/interceptors/request-auth-token-interceptor.service";
 
 
 @NgModule({
@@ -38,7 +38,7 @@ import { AuthInterceptor } from "./api/auth-interceptor/auth-interceptor.service
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
-    useClass: AuthInterceptor,
+    useClass: RequestAuthTokenInterceptor,
     multi: true }],
 
   bootstrap: [AppRootComponent]
