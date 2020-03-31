@@ -9,12 +9,6 @@ import {Person} from "../../_models/person";
 })
 export class AppFlatRentalComponent {
 
-  currentLoggedInUserName: string = "stub";
-
-  constructor(context: ContextService) {
-    let loggedInUser = context.getCurrentLoggedInUser();
-    this.currentLoggedInUserName = loggedInUser.firstName;
-  }
-
+  constructor() {}
 
 }

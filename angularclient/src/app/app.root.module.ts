@@ -15,6 +15,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { JoinComponent } from './uicomponent/join/join.component';
 import { RequestAuthTokenInterceptor } from "./api/interceptors/request-auth-token-interceptor.service";
+import { HeaderComponent } from './uicomponent/header/header.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { RequestAuthTokenInterceptor } from "./api/interceptors/request-auth-tok
     AppFlatRentalComponent,
     RegistrationFormComponent,
     LoginFormComponent,
-    JoinComponent
+    JoinComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

@@ -40,11 +40,3 @@ body, html {
   margin: 5px;
   height: 44px;
 }
-
-.currentUserName {
-  float: right;
-  margin-right: 5px;
-}
-.currentUserNameColor {
-  color: red;
-}
