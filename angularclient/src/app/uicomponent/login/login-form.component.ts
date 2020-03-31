@@ -1,13 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Person} from "../../_models/person";
 import {FormControl, Validators} from "@angular/forms";
 import {ErrorUtilsService} from "../../util/error-utils.service";
 import {ApiService} from "../../api/api.service";
-import {SnackBarService} from "../../service/snack-bar.service";
+import {SnackBarService} from "../../service/custom/snack-bar.service";
 import {Router} from "@angular/router";
-import {JWTTokenProvider} from "../../service/jwt-token-provider.service";
-import {ContextService} from "../../service/context.service";
-import {SubjectPoolService} from "../../subject-pool.service";
+import {ContextService} from "../../service/context/context.service";
 import {AuthenticationStateService} from "../../service/subjects/authentication-state.service";
 
 @Component({
@@ -29,7 +27,6 @@ export class LoginFormComponent implements OnInit {
               private authState: AuthenticationStateService,
               protected snackBarService: SnackBarService,
               private router: Router,
-              private authProvider: JWTTokenProvider,
               private context: ContextService) { }
 
   ngOnInit(): void {

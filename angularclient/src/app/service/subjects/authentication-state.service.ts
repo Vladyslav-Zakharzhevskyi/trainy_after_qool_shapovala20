@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs'
-import {ContextService} from "../context.service";
+import {ContextService} from "../context/context.service";
 
 @Injectable({
   providedIn: 'root'

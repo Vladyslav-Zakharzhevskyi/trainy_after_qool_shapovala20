@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {ContextService} from "../../service/context.service";
+import {ContextService} from "../../service/context/context.service";
 
 @Injectable()
 export class RequestAuthTokenInterceptor implements HttpInterceptor {

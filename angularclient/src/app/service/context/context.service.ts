@@ -1,8 +1,6 @@
 import {Injectable} from '@angular/core';
-import {Person} from "../_models/person";
+import {Person} from "../../_models/person";
 import {HttpResponse} from "@angular/common/http";
-import {JWTTokenProvider} from "./jwt-token-provider.service";
-import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'

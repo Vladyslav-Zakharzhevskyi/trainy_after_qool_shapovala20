@@ -2,8 +2,6 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {Person} from "../_models/person";
 import {Observable} from "rxjs";
-import {ContextService} from "../service/context.service";
-import {SubjectPoolService} from "../subject-pool.service";
 
 const HOST: string = 'http://localhost:8080';
 

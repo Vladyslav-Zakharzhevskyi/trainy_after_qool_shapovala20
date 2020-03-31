@@ -1,25 +1,25 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import { AppRoutingModule } from './app-routing.module';
-import { AppMaterialModule} from './resourceconfig/angular-material-module';
-import { AppRootComponent } from './app.root.component';
+import { AppRoutingModule } from './config/app-routing.module';
+import { AppMaterialModule} from './config/angular-material-module';
+import { ApplicationEntryPointComponent } from './uicomponent/application-entry-point.component';
 
-import { PersonsComponent } from './ui/persons/persons.component';
-import { NavHeaderComponent } from './ui/nav-header/nav-header.component';
-import { RegistrationFormComponent } from './ui/register/registration-form.component';
-import { LoginFormComponent } from "./ui/login/login-form.component";
+import { PersonsComponent } from './uicomponent/persons/persons.component';
+import { NavHeaderComponent } from './uicomponent/nav-header/nav-header.component';
+import { RegistrationFormComponent } from './uicomponent/register/registration-form.component';
+import { LoginFormComponent } from "./uicomponent/login/login-form.component";
 
-import { AppFlatRentalComponent } from './ui/app-rental/app-flat-rental.component';
+import { AppFlatRentalComponent } from './uicomponent/app-rental/app-flat-rental.component';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { JoinComponent } from './ui/join/join.component';
+import { JoinComponent } from './uicomponent/join/join.component';
 import { RequestAuthTokenInterceptor } from "./api/interceptors/request-auth-token-interceptor.service";
 
 
 @NgModule({
   declarations: [
-    AppRootComponent,
+    ApplicationEntryPointComponent,
     PersonsComponent,
     NavHeaderComponent,
     AppFlatRentalComponent,
@@ -41,6 +41,6 @@ import { RequestAuthTokenInterceptor } from "./api/interceptors/request-auth-tok
     useClass: RequestAuthTokenInterceptor,
     multi: true }],
 
-  bootstrap: [AppRootComponent]
+  bootstrap: [ApplicationEntryPointComponent]
 })
 export class AppRootModule { }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ContextService} from "../../service/context.service";
+import {ContextService} from "../../service/context/context.service";
 import {Person} from "../../_models/person";
 
 @Component({
