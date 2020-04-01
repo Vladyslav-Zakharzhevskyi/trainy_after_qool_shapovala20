@@ -9,7 +9,7 @@ import {ContextService} from "../../service/context/context.service";
 import {AuthenticationStateService} from "../../service/subjects/authentication-state.service";
 
 @Component({
-  selector: 'app-login-form',
+  selector: 'application-login',
   templateUrl: './login-form.component.html',
   styleUrls: ['../register/registration-form.component.css']
 })

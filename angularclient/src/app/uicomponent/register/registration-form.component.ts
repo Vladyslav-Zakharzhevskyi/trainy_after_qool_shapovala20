@@ -7,7 +7,7 @@ import {SnackBarService} from "../../service/custom/snack-bar.service";
 import {JoinComponent} from "../join/join.component";
 
 @Component({
-  selector: 'app-registration-form',
+  selector: 'application-registration',
   templateUrl: './registration-form.component.html',
   styleUrls: ['./registration-form.component.css']
 })

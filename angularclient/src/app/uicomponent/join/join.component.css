@@ -1,3 +1,17 @@
 .app-tab-icon {
   margin-right: 8px;
 }
+
+div.login-item,.registration-item {
+  background: #9298a0;
+  height: 900px;/*-_-*/
+}
+
+div#join-pages {
+  background-color: #343a40 !important;
+}
+
+.mat-tab-label {
+  color: rgba(255,255,255,.5);
+}
+
