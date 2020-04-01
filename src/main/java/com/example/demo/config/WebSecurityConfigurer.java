@@ -76,7 +76,9 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         http
                 .logout()
                 .logoutSuccessHandler((new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK)))
-                .invalidateHttpSession(true);
+                .invalidateHttpSession(true)
+                .and()
+                    .requestCache().disable();
     }
 
 

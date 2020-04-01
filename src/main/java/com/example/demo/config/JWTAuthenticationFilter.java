@@ -1,15 +1,10 @@
 package com.example.demo.config;
 
-import com.example.demo.service.AuthenticationUserDetailsService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -35,37 +30,45 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null) {
+        Authentication originAuthentication = SecurityContextHolder.getContext().getAuthentication();
+        if (originAuthentication != null) {
             filterChain.doFilter(request, response);
         }
 
         // Retrieve authentication from token
-        UsernamePasswordAuthenticationToken authenticationFromToken = getAuthenticationFromToken(request);
-        if (authenticationFromToken != null) {
-            SecurityContextHolder.getContext().setAuthentication(authenticationFromToken);
+        boolean authenticationJWT = isAuthenticationJWT(request);
+        if (authenticationJWT) {
+            UsernamePasswordAuthenticationToken authentication = getAuthenticationFromToken(request);
+            if (authentication != null) {
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
         }
+
 
         filterChain.doFilter(request, response);
     }
 
-    private UsernamePasswordAuthenticationToken getAuthenticationFromToken(HttpServletRequest request) {
+    private boolean isAuthenticationJWT(HttpServletRequest request) {
         String header = request.getHeader(AUTHENTICATION);
         if (header == null) {
-            return null;
+            return false;
         }
 
         if (!header.startsWith("Bearer") || !jwtUtils.checkJwtTokenCorrectness(header.substring(7))) {
-            return null;
+            return false;
         }
+
+        return true;
+    }
+
+    private UsernamePasswordAuthenticationToken getAuthenticationFromToken(HttpServletRequest request) {
+        String header = request.getHeader(AUTHENTICATION);
 
         String userName = jwtUtils.getUserNameFromJwtToken(header.substring(7));
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(userName);
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
 
-        return authenticationToken;
+        return new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
     }
 
 }
