@@ -7,31 +7,31 @@
     <form class="example-form">
 
       <mat-card-content>
-        <mat-form-field class="example-full-width">
+        <mat-form-field class="input-full-width">
           <mat-label>User Name</mat-label>
           <input matInput name="username" [(ngModel)]="person.username" [formControl]="formValidation.userName" placeholder="Username" required>
           <mat-error *ngIf="formValidation.userName.invalid">{{getErrorMessage("userName")}}</mat-error>
         </mat-form-field>
 
-        <mat-form-field class="example-full-width">
+        <mat-form-field class="input-full-width">
           <mat-label>First Name</mat-label>
           <input matInput name="firstname" [(ngModel)]="person.firstName" [formControl]="formValidation.firstName" placeholder="First Name" required>
           <mat-error *ngIf="formValidation.firstName.invalid">{{getErrorMessage("firstName")}}</mat-error>
         </mat-form-field>
 
-        <mat-form-field class="example-full-width">
+        <mat-form-field class="input-full-width">
           <mat-label>Last Name</mat-label>
           <input matInput name="lastname" [(ngModel)]="person.lastName" [formControl]="formValidation.lastName" placeholder="Last Name" required>
           <mat-error *ngIf="formValidation.lastName.invalid">{{getErrorMessage("lastName")}}</mat-error>
         </mat-form-field>
 
-        <mat-form-field class="example-full-width">
+        <mat-form-field class="input-full-width">
           <mat-label>Email</mat-label>
           <input matInput name="email" [(ngModel)]="person.email" [formControl]="formValidation.email" placeholder="Email" required>
           <mat-error *ngIf="formValidation.email.invalid">{{getErrorMessage("email")}}</mat-error>
         </mat-form-field>
 
-        <mat-form-field class="example-full-width">
+        <mat-form-field class="input-full-width">
           <mat-label>Password</mat-label>
           <input matInput name="password" type="password" [(ngModel)]="person.password" [formControl]="formValidation.password" placeholder="Password" required>
           <mat-error *ngIf="formValidation.password.invalid">{{getErrorMessage("password")}}</mat-error>

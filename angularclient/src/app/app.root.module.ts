@@ -16,6 +16,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { JoinComponent } from './uicomponent/join/join.component';
 import { RequestAuthTokenInterceptor } from "./api/interceptors/request-auth-token-interceptor.service";
 import { HeaderComponent } from './uicomponent/header/header.component';
+import {MatStepperModule} from "@angular/material/stepper";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 
 @NgModule({
@@ -36,7 +38,9 @@ import { HeaderComponent } from './uicomponent/header/header.component';
     AppMaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatStepperModule,
+    MatCheckboxModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {Person} from "../_models/person";
 import {Observable} from "rxjs";
+import {Advertisement} from "../_models/advertisement";
 
 const HOST: string = 'http://localhost:8080';
 
@@ -34,6 +35,10 @@ export class ApiService {
 
   public getCurrentPerson(): Observable<Person> {
     return this.httpClient.get<Person>(HOST + '/api/person/current');
+  }
+
+  public addAdvertisement(item: Advertisement): Observable<any> {
+    return this.httpClient.post(HOST + '/api/rental/addAdvertisement', item);
   }
 
   public logout(): Observable<Object> {
