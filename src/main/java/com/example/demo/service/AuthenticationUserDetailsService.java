@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.HomeBusinessUser;
 import com.example.demo.entity.Person;
 import com.example.demo.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,8 @@ public class AuthenticationUserDetailsService implements UserDetailsService {
         Person person = personByUserName.
                 orElseThrow(() -> new UsernameNotFoundException("User with username has not found"));
 
-        return new User(username, person.getPassword(), Collections.emptyList());
+        return new HomeBusinessUser(person.getId(), username, person.getPassword(),
+                                    Collections.emptyList(), person.getFirstName(), person.getLastName());
     }
 
 }

@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.converter.PersonDtoConverter;
 import com.example.demo.dto.NewPersonDto;
 import com.example.demo.dto.PersonDto;
+import com.example.demo.entity.HomeBusinessUser;
 import com.example.demo.entity.Person;
 import com.example.demo.repository.PersonRepository;
 import com.example.demo.service.PersonService;
@@ -48,7 +49,7 @@ public class PersonsController {
     }
 
     @RequestMapping(value = "/person/current", method = RequestMethod.GET   )
-    public PersonDto getCurrentLoggedInUser(@AuthenticationPrincipal(errorOnInvalidType = true) User user) {
+    public PersonDto getCurrentLoggedInUser(@AuthenticationPrincipal(errorOnInvalidType = true) HomeBusinessUser user) {
         Optional<Person> personByUserName = personRepository.findPersonByUserName(user.getUsername());
         Person person = personByUserName.orElseThrow(() -> new UsernameNotFoundException("User with username has not found"));
         return personDtoConverter.convert(person);
