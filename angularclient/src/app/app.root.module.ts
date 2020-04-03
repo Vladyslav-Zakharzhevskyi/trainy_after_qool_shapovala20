@@ -6,7 +6,6 @@ import { AppMaterialModule} from './config/angular-material-module';
 import { ApplicationEntryPointComponent } from './uicomponent/application-entry-point.component';
 
 import { PersonsComponent } from './uicomponent/persons/persons.component';
-import { NavHeaderComponent } from './uicomponent/nav-header/nav-header.component';
 import { RegistrationFormComponent } from './uicomponent/register/registration-form.component';
 import { LoginFormComponent } from "./uicomponent/login/login-form.component";
 
@@ -24,7 +23,6 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
   declarations: [
     ApplicationEntryPointComponent,
     PersonsComponent,
-    NavHeaderComponent,
     AppFlatRentalComponent,
     RegistrationFormComponent,
     LoginFormComponent,
