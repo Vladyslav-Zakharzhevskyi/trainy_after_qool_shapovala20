@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './config/app-routing.module';
 import { AppMaterialModule} from './config/angular-material-module';
 import { ApplicationEntryPointComponent } from './uicomponent/application-entry-point.component';
@@ -17,6 +17,7 @@ import { RequestAuthTokenInterceptor } from "./api/interceptors/request-auth-tok
 import { HeaderComponent } from './uicomponent/header/header.component';
 import {MatStepperModule} from "@angular/material/stepper";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {TranslationModule} from "./config/translation.module";
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     ReactiveFormsModule,
     MatSnackBarModule,
     MatStepperModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    TranslationModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

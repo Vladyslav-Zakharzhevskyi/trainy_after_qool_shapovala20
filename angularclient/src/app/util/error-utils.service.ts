@@ -1,23 +1,24 @@
 import { Injectable } from '@angular/core';
+import {TranslateService} from "@ngx-translate/core";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ErrorUtilsService {
 
-  constructor() { }
+  constructor(private translate:  TranslateService) { }
 
   extractErrorMessage(src: any, key: string): string {
     if (src[key].hasError('required')) {
-      return 'You must enter value'
+      return this.translate.instant('error.required');
     } if (src[key].hasError('minlength')) {
-      return 'Length of the field is small. Min length is 3 symbols.'
+      return this.translate.instant('error.minlength');
     } if (src[key].hasError('maxlength')) {
-      return 'Value is too much. Max length is 20 symbols.'
+      return this.translate.instant('error.maxlength');
     } if (src[key].hasError('email')) {
-      return 'Email is not correct.'
+      return this.translate.instant('error.email');
     } if (src[key].hasError('pattern')) {
-      return 'Password should not be empty.'
+      return this.translate.instant('error.pattern');
     }
   }
 

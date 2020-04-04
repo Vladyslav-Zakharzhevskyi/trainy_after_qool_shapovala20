@@ -5,6 +5,7 @@ import {ApiService} from "../../api/api.service";
 import {ErrorUtilsService} from "../../util/error-utils.service";
 import {FormControlUtilService, InputTypeValidation} from "../../util/form-control-util.service";
 import {WithValidators} from "../../system/interfaces/with-validators";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-flat-rental',
@@ -17,13 +18,22 @@ export class AppFlatRentalComponent implements OnInit, WithValidators {
   public personalInfoValidator: FormGroup;
   public advertisementInfoValidator: FormGroup;
 
+  public types: string[] = [];
+
   constructor(private api: ApiService,
               private errorUtilsService: ErrorUtilsService,
-              private formControlUtilService: FormControlUtilService) {}
+              private formControlUtilService: FormControlUtilService,
+              private translation: TranslateService) {}
 
 
   ngOnInit(): void {
     this.addValidation();
+    this.initTypes();
+  }
+
+  initTypes(): void {
+    let typesTrans: string[] = ['advertisement.type.sell', 'advertisement.type.rent'];
+    this.types = typesTrans.map(typeTransKey => this.translation.instant(typeTransKey));
   }
 
   addValidation(): void {

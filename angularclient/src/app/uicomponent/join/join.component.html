@@ -1,9 +1,23 @@
 <div id="join-pages" data-name="login-register-page">
+
+  <div class="lang-style">
+    <div class="dropdown mt-1">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="flag-icon flag-icon-{{translationModule.getLangImgSuffix(translation.currentLang)}}"></span>
+        Language
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item cursor-pointer" (click)="translation.use('en')"><span class="flag-icon flag-icon-us m-2"></span>English</a>
+        <a class="dropdown-item cursor-pointer" (click)="translation.use('ru')"><span class="flag-icon flag-icon-ru m-2"></span>Russian</a>
+      </div>
+    </div>
+  </div>
+
   <mat-tab-group [selectedIndex]="_selectedTab" dynamicHeight="false" mat-align-tabs="center" class="join-header">
     <mat-tab class="mat-tab-label-container">
       <ng-template mat-tab-label>
         <mat-icon class="app-tab-icon" aria-hidden="false" aria-label="Rental Application">people_outline</mat-icon>
-        Login
+        {{ 'LOGIN' | translate }}
       </ng-template>
       <div class="login-item">
         <application-login></application-login>
@@ -12,7 +26,7 @@
     <mat-tab>
       <ng-template mat-tab-label>
         <i class="app-tab-icon material-icons">home</i>
-        Registration
+        {{ 'REGISTRATION' | translate }}
       </ng-template>
       <div class="registration-item">
         <application-registration></application-registration>
