@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {AppFlatRentalComponent} from "../uicomponent/app-rental/app-flat-rental.component";
+import {AppFlatRentalComponent} from "../uicomponents/app-rental/app-flat-rental.component";
 import {BrowserModule} from "@angular/platform-browser";
-import {JoinComponent} from "../uicomponent/join/join.component";
+import {JoinComponent} from "../uicomponents/join/join.component";
 
 
 const routes: Routes = [
