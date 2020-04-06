@@ -7,18 +7,10 @@ div.login-item,.registration-item {
   height: 900px;/*-_-*/
 }
 
-div#join-pages {
+#join-page-header {
   background-color: #343a40 !important;
 }
 
 .mat-tab-label {
   color: rgba(255,255,255,.5);
-}
-
-.lang-style {
-  position: absolute;
-  float: right;
-  right: 0;
-  margin-right: 60px;
-  z-index: 16777271;
 }

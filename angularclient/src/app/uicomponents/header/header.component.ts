@@ -4,8 +4,6 @@ import {AuthenticationStateService} from "../../service/subjects/authentication-
 import {ApiService} from "../../api/api.service";
 import {Router} from "@angular/router";
 import {SnackBarService} from "../../service/custom/snack-bar.service";
-import {TranslateService} from "@ngx-translate/core";
-import {TranslationModule} from "../../config/translation.module";
 
 @Component({
   selector: 'application-header',
@@ -22,8 +20,7 @@ export class HeaderComponent implements OnInit {
               private api: ApiService,
               private router: Router,
               private snackBarService: SnackBarService,
-              public translation: TranslateService,
-              public translationModule: TranslationModule) { }
+             ) { }
 
   ngOnInit(): void {
     this.userIsLoggedIn = this.context.userIsLoggedIn();

@@ -5,6 +5,8 @@ import {ApiService} from "../api/api.service";
 import {Router} from "@angular/router";
 import {AuthenticationStateService} from "../service/subjects/authentication-state.service";
 import {SnackBarService} from "../service/custom/snack-bar.service";
+import {TranslateService} from "@ngx-translate/core";
+import {TranslationModule} from "../config/translation.module";
 
 @Component({
   selector: 'application-entry-point',
@@ -20,7 +22,9 @@ export class ApplicationEntryPointComponent {
               private subjectPoolService: SubjectPoolService,
               private authState: AuthenticationStateService,
               private snackBarService: SnackBarService,
-              private api: ApiService) {
+              private api: ApiService,
+              public translation: TranslateService,
+              public translationModule: TranslationModule) {
     this.init();
   }
 

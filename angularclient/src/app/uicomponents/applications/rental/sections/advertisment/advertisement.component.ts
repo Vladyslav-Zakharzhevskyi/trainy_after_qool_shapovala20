@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {Advertisement} from "../../../../_models/advertisement";
+import {Advertisement} from "../../../../../_models/advertisement";
 import {FormGroup} from "@angular/forms";
-import {ApiService} from "../../../../api/api.service";
-import {ErrorUtilsService} from "../../../../util/error-utils.service";
-import {FormControlUtilService, InputTypeValidation} from "../../../../util/form-control-util.service";
+import {ApiService} from "../../../../../api/api.service";
+import {ErrorUtilsService} from "../../../../../util/error-utils.service";
+import {FormControlUtilService, InputTypeValidation} from "../../../../../util/form-control-util.service";
 import {TranslateService} from "@ngx-translate/core";
-import {WithValidators} from "../../../../system/interfaces/with-validators";
+import {WithValidators} from "../../../../../system/interfaces/with-validators";
 import {timer} from "rxjs";
 
 @Component({

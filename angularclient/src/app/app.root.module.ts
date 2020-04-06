@@ -9,7 +9,7 @@ import { PersonsComponent } from './uicomponents/persons/persons.component';
 import { RegistrationFormComponent } from './uicomponents/register/registration-form.component';
 import { LoginFormComponent } from "./uicomponents/login/login-form.component";
 
-import { AppFlatRentalComponent } from './uicomponents/app-rental/app-flat-rental.component';
+import { AppFlatRentalComponent } from './uicomponents/applications/rental/app-flat-rental.component';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { JoinComponent } from './uicomponents/join/join.component';
@@ -18,7 +18,8 @@ import { HeaderComponent } from './uicomponents/header/header.component';
 import {MatStepperModule} from "@angular/material/stepper";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {TranslationModule} from "./config/translation.module";
-import { AdvertisementComponent } from './uicomponents/app-rental/sections/advertisment/advertisement.component';
+import { AdvertisementComponent } from './uicomponents/applications/rental/sections/advertisment/advertisement.component';
+import { SelectableComponent } from './uicomponents/applications/selectable.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { AdvertisementComponent } from './uicomponents/app-rental/sections/adver
     LoginFormComponent,
     JoinComponent,
     HeaderComponent,
-    AdvertisementComponent
+    AdvertisementComponent,
+    SelectableComponent
   ],
   imports: [
     BrowserModule,

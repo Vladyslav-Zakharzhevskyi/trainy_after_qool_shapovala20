@@ -1,12 +1,24 @@
 <div id='application' data-name='application-wrapper'>
 
   <!--header-->
-  <div id="application-header" data-name="application-header-wrapper">
-    <application-header></application-header>
-  </div>
+<!--  <div id="application-header" data-name="application-header-wrapper">-->
+<!--    <application-header></application-header>-->
+<!--  </div>-->
   <!--content-->
   <div id="application-content" data-name="application-content-wrapper">
     <router-outlet></router-outlet>
   </div>
+
+  <!--common lang dropdown-->
+  <span class="app-lang-style dropdown mt-1">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <span class="flag-icon flag-icon-{{translationModule.getLangImgSuffix(translation.currentLang)}}"></span>
+      Language
+    </button>
+    <span class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <a class="dropdown-item cursor-pointer" (click)="translation.use('en')"><span class="flag-icon flag-icon-us m-2"></span>English</a>
+      <a class="dropdown-item cursor-pointer" (click)="translation.use('ru')"><span class="flag-icon flag-icon-ru m-2"></span>Russian</a>
+    </span>
+  </span>
 
 </div>
