@@ -18,7 +18,7 @@ import { HeaderComponent } from './uicomponents/header/header.component';
 import {MatStepperModule} from "@angular/material/stepper";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {TranslationModule} from "./config/translation.module";
-import { AdvertismentComponent } from './uicomponents/app-rental/sections/advertisment/advertisment.component';
+import { AdvertisementComponent } from './uicomponents/app-rental/sections/advertisment/advertisement.component';
 
 
 @NgModule({
@@ -30,7 +30,7 @@ import { AdvertismentComponent } from './uicomponents/app-rental/sections/advert
     LoginFormComponent,
     JoinComponent,
     HeaderComponent,
-    AdvertismentComponent
+    AdvertisementComponent
   ],
   imports: [
     BrowserModule,
