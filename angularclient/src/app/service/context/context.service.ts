@@ -67,6 +67,16 @@ export class ContextService {
     window.sessionStorage.setItem(this.USER_IS_LOGGED_IN, JSON.stringify(value));
   }
 
+  public setUsedLang(lang: string): void {
+    if (lang != null) {
+      window.sessionStorage.setItem("lang", lang);
+    }
+  }
+
+  public getLang(): string {
+    return window.sessionStorage.getItem("lang")
+  }
+
   public logout() : void {
     window.sessionStorage.removeItem(this.CURRENT_USER);
     window.sessionStorage.removeItem(this.JWT_TOKEN);

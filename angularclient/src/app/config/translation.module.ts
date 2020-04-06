@@ -2,6 +2,7 @@ import {NgModule} from "@angular/core";
 import {TranslateLoader, TranslateModule, TranslateService} from "@ngx-translate/core";
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {HttpClient} from "@angular/common/http";
+import {ContextService} from "../service/context/context.service";
 
 
 // AoT requires an exported function for factories
@@ -34,7 +35,7 @@ export class TranslationModule {
     new Language("ru", "ru")
   ];
 
-  constructor(public translate: TranslateService) {
+  constructor(public translate: TranslateService, private context: ContextService) {
     let langs: any[] = [];
     langs.push(this.languages.map(value => value.lang)) ;
 
@@ -44,7 +45,18 @@ export class TranslationModule {
     translate.setDefaultLang('en');
 
     // the lang to use, if the lang isn't available, it will use the current loader to get them
-    translate.use(this.startupLanguage);
+    translate.use(context.getLang() || this.startupLanguage);
+
+
+    // Save changed lang to session storage
+    this.subscribe();
+  }
+
+  private subscribe(): void {
+    this.translate.onLangChange.subscribe(langContext => {
+        this.context.setUsedLang(langContext.lang)
+      }
+    );
   }
 
   public getLangImgSuffix(lang: string): string {
