@@ -1,6 +1,11 @@
 #app-title {
   width: 700px;
-  height: 400px;
+  height: 450px;
   margin: auto;
-  background-color: #343a40;
+}
+
+.app-title-name {
+  font-size: 30px;
+  font-weight: normal;
+  font-family: Paytone One;
 }

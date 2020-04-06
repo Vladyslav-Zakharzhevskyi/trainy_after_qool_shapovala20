@@ -1,4 +1,6 @@
 {
+  "APPLICATION_TO_BE_USED_TEXT": "Выберите приложение для использования!",
+  "LANG_TITLE": "Язык",
   "LOGIN": "Вход",
   "DO_LOGIN": "Войти",
   "REGISTRATION": "Регистрация",
@@ -43,6 +45,7 @@
 
 
   "BTN_NEXT": "Далее",
-  "BTN_PREV": "Назад"
+  "BTN_PREV": "Назад",
 
+  "ADDRESS": "ул. Зоологическая, 12/15"
 }

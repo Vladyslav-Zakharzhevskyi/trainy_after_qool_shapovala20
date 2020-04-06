@@ -1,4 +1,6 @@
 {
+  "APPLICATION_TO_BE_USED_TEXT": "Please select Application to be used internally!",
+  "LANG_TITLE": "Language",
   "LOGIN": "Login",
   "REGISTRATION": "Registration",
   "DO_REGISTRATION": "Register",
@@ -41,6 +43,7 @@
   "advertisement.add" : "Add Advertisement",
 
   "BTN_NEXT": "Next",
-  "BTN_PREV": "Previously"
+  "BTN_PREV": "Previously",
 
+  "ADDRESS": "st. Zoological, 12/15"
 }
