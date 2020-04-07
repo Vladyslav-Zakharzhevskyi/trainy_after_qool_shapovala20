@@ -12,6 +12,9 @@ import { MatTabsModule } from "@angular/material/tabs";
 import { MatCardModule } from "@angular/material/card";
 import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatStepperModule} from "@angular/material/stepper";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 
 const allMatFeatures = [
@@ -27,10 +30,13 @@ const allMatFeatures = [
   MatCardModule,
   MatInputModule,
   MatSelectModule,
+  MatSnackBarModule,
+  MatStepperModule,
+  MatCheckboxModule,
 ];
 
 @NgModule({
   imports: [allMatFeatures],
   exports: [allMatFeatures]
 })
-export class AppMaterialModule {}
+export class AngularMaterialModule {}

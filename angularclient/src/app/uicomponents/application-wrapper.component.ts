@@ -9,11 +9,11 @@ import {TranslateService} from "@ngx-translate/core";
 import {TranslationModule} from "../config/translation.module";
 
 @Component({
-  selector: 'application-entry-point',
-  templateUrl: 'application-entry-point.html',
-  styleUrls: ['./application-entry-point.css']
+  selector: 'application-wrapper',
+  templateUrl: 'application-wrapper.html',
+  styleUrls: ['./application-wrapper.css']
 })
-export class ApplicationEntryPointComponent {
+export class ApplicationWrapperComponent {
 
 
 
