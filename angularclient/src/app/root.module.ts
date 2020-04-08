@@ -17,6 +17,7 @@ import { JoinComponent } from './uicomponents/join/join.component';
 import { RequestAuthTokenInterceptor } from "./api/interceptors/request-auth-token-interceptor.service";
 import { HeaderComponent } from './uicomponents/header/header.component';
 import { AdvertisementComponent } from './uicomponents/applications/rental/sections/advertisment/advertisement.component';
+import {AuthenticationListenerService} from "./system/authentication-listener.service";
 
 
 @NgModule({
@@ -47,4 +48,8 @@ import { AdvertisementComponent } from './uicomponents/applications/rental/secti
 
   bootstrap: [ApplicationWrapperComponent]
 })
-export class RootModule { }
+export class RootModule {
+
+  constructor(private customAuthenticationListener: AuthenticationListenerService) { }
+
+}
