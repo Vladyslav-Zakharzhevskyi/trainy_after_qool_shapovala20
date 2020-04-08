@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.UUID;
+
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/rental")
 public class RentalController {
 
     @Autowired
@@ -22,12 +25,30 @@ public class RentalController {
     @Autowired
     private AdvertisementDtoConverter advertisementDtoConverter;
 
-    @RequestMapping(value = "/rental/addAdvertisement", method = RequestMethod.POST)
+    @RequestMapping(value = "/advertisement", method = RequestMethod.POST)
     public AdvertisementDto saveAdvertisement(@AuthenticationPrincipal HomeBusinessUser user, @RequestBody AdvertisementDto advertisement) {
 
         Advertisement savedAdv = advertisementRepository.save(advertisementDtoConverter.convert(advertisement));
 
         return advertisementDtoConverter.convertToDto(savedAdv);
+    }
+
+    @RequestMapping(value = "/advertisement", method = RequestMethod.GET)
+    public List<AdvertisementDto> getAdvertisements(@AuthenticationPrincipal HomeBusinessUser user) {
+
+        List<Advertisement> all = advertisementRepository.findAll();
+
+        return advertisementDtoConverter.convertToDto(all);
+    }
+
+    @RequestMapping(value = "/advertisement", method = RequestMethod.PUT)
+    public AdvertisementDto updateAdvertisement(@AuthenticationPrincipal HomeBusinessUser user, @RequestBody UUID id) {
+        return null;
+    }
+
+    @RequestMapping(value = "/advertisement", method = RequestMethod.DELETE)
+    public AdvertisementDto deleteAdvertisement(@AuthenticationPrincipal HomeBusinessUser user, @RequestBody UUID id) {
+        return null;
     }
 
 

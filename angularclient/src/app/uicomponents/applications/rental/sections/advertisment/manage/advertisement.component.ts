@@ -1,18 +1,18 @@
 import {Component, OnInit} from '@angular/core';
-import {Advertisement} from "../../../../../_models/advertisement";
+import {Advertisement} from "../../../../../../_models/advertisement";
 import {FormGroup} from "@angular/forms";
-import {ApiService} from "../../../../../api/api.service";
-import {ErrorUtilsService} from "../../../../../util/error-utils.service";
-import {FormControlUtilService, InputTypeValidation} from "../../../../../util/form-control-util.service";
+import {ApiService} from "../../../../../../api/api.service";
+import {ErrorUtilsService} from "../../../../../../util/error-utils.service";
+import {FormControlUtilService, InputTypeValidation} from "../../../../../../util/form-control-util.service";
 import {TranslateService} from "@ngx-translate/core";
-import {WithValidators} from "../../../../../_models/interfaces/with-validators";
+import {WithValidatorsInterface} from "../../../../../../_models/interfaces/with-validators.interface";
 
 @Component({
   selector: 'advertisement-add-edit',
   templateUrl: './advertisement.component.html',
   styleUrls: ['./advertisement.component.css']
 })
-export class AdvertisementComponent implements OnInit, WithValidators  {
+export class AdvertisementComponent implements OnInit, WithValidatorsInterface  {
 
   public advertisementModel: Advertisement = new Advertisement();
 

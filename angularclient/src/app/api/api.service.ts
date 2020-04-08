@@ -38,7 +38,11 @@ export class ApiService {
   }
 
   public addAdvertisement(item: Advertisement): Observable<any> {
-    return this.httpClient.post(HOST + '/api/rental/addAdvertisement', item);
+    return this.httpClient.post(HOST + '/api/rental/advertisement', item);
+  }
+
+  public getAdvertisements(): Observable<any> {
+    return this.httpClient.get(HOST + '/api/rental/advertisement');
   }
 
   public logout(): Observable<Object> {
