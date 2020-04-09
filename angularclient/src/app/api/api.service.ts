@@ -42,7 +42,7 @@ export class ApiService {
   }
 
   public getAdvertisements(): Observable<any> {
-    return this.httpClient.get(HOST + '/api/rental/advertisement');
+    return this.httpClient.get<Advertisement>(HOST + '/api/rental/advertisement');
   }
 
   public logout(): Observable<Object> {
