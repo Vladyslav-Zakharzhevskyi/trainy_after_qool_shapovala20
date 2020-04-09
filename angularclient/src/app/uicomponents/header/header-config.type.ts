@@ -11,6 +11,7 @@ export class HeaderConfig implements RequireTranslationListener {
   constructor(private translation: TranslateService, items: HeaderItem[]) {
     this._items = items;
     this.translateHeadersTitles();
+    this.listenLangChange();
   }
 
   listenLangChange(): void {

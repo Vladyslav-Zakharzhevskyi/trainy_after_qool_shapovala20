@@ -16,9 +16,9 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { JoinComponent } from './uicomponents/join/join.component';
 import { RequestAuthTokenInterceptor } from "./api/interceptors/request-auth-token-interceptor.service";
 import { HeaderComponent } from './uicomponents/header/header.component';
-import { AdvertisementComponent } from './uicomponents/applications/rental/sections/advertisment/manage/advertisement.component';
+import { AdvertisementComponent } from './uicomponents/applications/rental/sections/advertisement/manage/advertisement.component';
 import {AuthenticationListenerService} from "./system/authentication-listener.service";
-import {AdvertisementViewComponent} from "./uicomponents/applications/rental/sections/advertisment/view/advertisement-view.component";
+import {AdvertisementViewComponent} from "./uicomponents/applications/rental/sections/advertisement/view/advertisement-view.component";
 import {MatTableModule} from "@angular/material/table";
 
 

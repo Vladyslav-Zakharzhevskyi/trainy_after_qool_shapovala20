@@ -24,9 +24,16 @@ export class HeaderComponent {
   }
 
   private checkForParam(queryParam: object): boolean {
-    let param = Object.keys(queryParam);
+    const param = Object.keys(queryParam);
 
-    let navigationQParams = this.router.snapshot.root.queryParamMap;
+    const navigationQParams = this.router.snapshot.root.queryParamMap;
+
+    // default case
+    if (navigationQParams.keys.length == 0 && queryParam['tab'] == 'dashboard') {
+      return true;
+    }
+
+    // particular case
     return param.every(
       navParam =>
         navigationQParams.get(navParam) &&
