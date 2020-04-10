@@ -33,7 +33,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     private UserDetailsService authenticationUserDetailsService;
 
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    private BCryptPasswordEncoderCustom passwordEncoder;
 
     @Value("${authentication.method}")
     private String authenticationMethod;
@@ -93,11 +93,6 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         daoAuthenticationProvider.setUserDetailsService(authenticationUserDetailsService);
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
         return daoAuthenticationProvider;
-    }
-
-    @Bean
-    public BCryptPasswordEncoder createPasswordEncoder() {
-        return new BCryptPasswordEncoder(8);
     }
 
 }

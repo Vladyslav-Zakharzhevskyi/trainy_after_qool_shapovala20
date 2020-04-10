@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.util.AssertionErrors;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -32,8 +33,10 @@ class HibernateTests {
 
 
 	@Test
+	@Transactional
 	void address_job_and_person_created_and_saved() {
 		Address address = new Address();
+		address.setCity("Kiev");
 		address.setStreet("Generala Shapovala");
 		address.setBuildingNum("20/1");
 		address.setAddressType(AddressType.HOUSE);
@@ -64,8 +67,10 @@ class HibernateTests {
 						addressFromDB.map(BaseEntity::getId)));
 
 		Person person = new Person();
+		person.setUserName("Andrew-4");
 		person.setFirstName("Vladyslav");
 		person.setLastName("Zakharzhevskyi");
+		person.setPassword("some pass value");
 		person.setAge(28);
 		person.addJob(job);
 		person.setSalary(2800.00);
@@ -97,15 +102,19 @@ class HibernateTests {
 	}
 
 	@Test
-	public void hibernate_tests_parent_and_child_test_cases_saved_succesfully_all_cases() {
+	@Transactional
+	public void hibernate_tests_parent_and_child_test_cases_saved_successfully_all_cases() {
 		Address address = new Address();
+		address.setCity("Kiev");
 		address.setStreet("NEW_ADDRESS");
 		address.setAddressType(AddressType.GOVERNMENT);
 		address.setBuildingNum("25/10");
 
 		Person person = new Person();
+		person.setUserName("Andrew");
 		person.setFirstName("Andrew");
 		person.setLastName("Bertinskiy");
+		person.setPassword("some pass value");
 		person.setAge(27);
 		person.setSalary(2000.00);
 		person.addAddress(address);
@@ -126,13 +135,16 @@ class HibernateTests {
 
 
 		Person person2 = new Person();
+		person.setUserName("Andrew-2");
 		person2.setFirstName("Anthony");
 		person2.setLastName("Hopkins");
+		person.setPassword("some pass value");
 		person2.setAge(62);
 		person2.setSalary(35000.00);
 		person2.setCurrency(Currency.US);
 
 		Address address2 = new Address();
+		address2.setCity("Kiev");
 		address2.setStreet("Abrigale str.");
 		address2.setBuildingNum("15/77");
 		address2.setAddressType(AddressType.PRIVATE_HOUSE);
@@ -178,8 +190,10 @@ class HibernateTests {
 
 		//3 Child exist, create new parent object add child to parent and save child
 		Person person3 = new Person();
+		person3.setUserName("Andrew-3");
 		person3.setFirstName("Andrea");
 		person3.setLastName("Bertolucci");
+		person.setPassword("some pass value");
 		person3.setAge(62);
 		person3.setSalary(35000.00);
 		person3.setCurrency(Currency.US);
