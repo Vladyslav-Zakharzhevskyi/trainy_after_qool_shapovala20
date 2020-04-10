@@ -52,7 +52,7 @@ export class LoginFormComponent implements OnInit {
     this.apiService.getCurrentPerson().subscribe(person => {
         this.context.authenticate(person);
         this.authState.setState(true);
-        this.router.navigate(['/app/rental'])
+        this.router.navigate(['/applications'])
       }
     );
   }
