@@ -63,8 +63,10 @@ public class AdvertisementDtoConverterImpl implements AdvertisementDtoConverter 
                 advertisement.getCost(),
                 advertisement.getRoomCount(),
                 advertisement.getRoomCount(),
-                advertisement.getBargain()
-        );
+                advertisement.getBargain(),
+                advertisement.getDateCreation(),
+                advertisement.getDateUpdated()
+                );
         return dto;
     }
 

@@ -24,7 +24,7 @@ public class JWTUtils {
     @Value("${jwt.secret.key}")
     private String secretKey;
 
-    private Integer expiredTimeMs = 60000 * 60 * 3;
+    private Integer expiredTimeMs = 60000 * 60 * 3; /*3 HOURS*/
 
     public String generateJwtToken(User principal) {
         return Jwts.builder()
