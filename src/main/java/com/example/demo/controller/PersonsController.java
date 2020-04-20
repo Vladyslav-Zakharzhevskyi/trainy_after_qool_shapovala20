@@ -12,20 +12,22 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/person/")
 public class PersonsController {
 
     private Logger logger = LogManager.getLogger(PersonsController.class);
@@ -39,7 +41,7 @@ public class PersonsController {
     @Autowired
     private PersonService personService;
 
-    @RequestMapping(value = "/person/register", method = RequestMethod.POST)
+    @RequestMapping(value = "register", method = RequestMethod.POST)
     public ResponseEntity<PersonDto> registerPerson(@RequestBody NewPersonDto newPersonDto) {
         Person person = personDtoConverter.convert(newPersonDto);
 
@@ -48,19 +50,28 @@ public class PersonsController {
         return ResponseEntity.ok(personDtoConverter.convert(savedPerson));
     }
 
-    @RequestMapping(value = "/person/current", method = RequestMethod.GET   )
+    @RequestMapping(value = "current", method = RequestMethod.GET)
     public PersonDto getCurrentLoggedInUser(@AuthenticationPrincipal(errorOnInvalidType = true) HomeBusinessUser user) {
         Optional<Person> personByUserName = personRepository.findPersonByUserName(user.getUsername());
         Person person = personByUserName.orElseThrow(() -> new UsernameNotFoundException("User with username has not found"));
         return personDtoConverter.convert(person);
     }
 
-    @RequestMapping(value = "/person", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     @Transactional
     public List<PersonDto> getPersons(){
         List<Person> persons = personRepository.findAll();
 
         return personDtoConverter.convert(persons);
+    }
+
+    @RequestMapping(value = "/checkUserNameAvailability/{username}", method = RequestMethod.POST)
+    public ResponseEntity<Map<String, String>> checkUserNameAvailability(@PathVariable(value = "username") String userName) {
+        Map<String, String> result = new HashMap<>();
+
+        personService.checkUsernameIsPresent(result, userName.trim());
+
+        return ResponseEntity.ok(result);
     }
 
 
