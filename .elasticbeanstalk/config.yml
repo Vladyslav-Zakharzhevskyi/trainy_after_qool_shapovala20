@@ -1,0 +1,20 @@
+branch-defaults:
+  master:
+    environment: Investigation-Backend-env
+environment-defaults:
+  Investigation-Backend-env:
+    branch: null
+    repository: null
+global:
+  application_name: investigation-backend
+  default_ec2_keyname: null
+  default_platform: arn:aws:elasticbeanstalk:us-east-2::platform/Java 8 running on
+    64bit Amazon Linux/2.10.4
+  default_region: us-east-2
+  include_git_submodules: true
+  instance_profile: nulleb
+  platform_name: null
+  platform_version: null
+  profile: eb-cli
+  sc: git
+  workspace_type: Application
