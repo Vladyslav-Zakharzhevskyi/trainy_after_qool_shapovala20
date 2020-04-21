@@ -11,19 +11,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/api")
 public class ApplicationController {
-
-    @RequestMapping(value = "/")
-    public String welcomeMessage() {
-        return "home";
-    }
 
 
     @Value("${authentication.method}")
     private String authenticationType;
 
-    @RequestMapping(value = "/getApplicationSettings", method = RequestMethod.GET)
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String welcomeMessage() {
+        return "redirect-to-firebase";
+    }
+
+    @RequestMapping(value = "/api/getApplicationSettings", method = RequestMethod.GET)
     public ResponseEntity<Map<String, String>> getApplicationSettingsList() {
         Map<String, String> settings = new HashMap<String, String>();
         settings.put("authenticationType", authenticationType);

@@ -13,10 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.FormLoginConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
-import org.springframework.security.web.context.SecurityContextPersistenceFilter;
-import org.springframework.security.web.header.HeaderWriterFilter;
 import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter;
 
 @Configuration
@@ -49,14 +46,17 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http
                 .authorizeRequests()
-                    .antMatchers("/api/person/do-login").permitAll()
-                    .antMatchers("/api/person/register").permitAll()
-                    .antMatchers("/api/person/checkUserNameAvailability/*").permitAll()
-                    .antMatchers("/api/getApplicationSettings").permitAll()
-                    .anyRequest().authenticated();
+                .antMatchers("/login").permitAll()
+                .antMatchers("/img/favicon.png").permitAll()
+                .antMatchers("/api/person/do-login").permitAll()
+                .antMatchers("/api/person/register").permitAll()
+                .antMatchers("/api/person/checkUserNameAvailability/*").permitAll()
+                .antMatchers("/api/getApplicationSettings").permitAll()
+                .anyRequest().authenticated();
 
         FormLoginConfigurer<HttpSecurity> loginConfigurer = http
                 .formLogin()
+                .loginPage("/login")
                 .loginProcessingUrl("/api/person/do-login");
 
         if (authenticationMethod.equals("basic")) {
