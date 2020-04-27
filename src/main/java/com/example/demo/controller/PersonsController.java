@@ -57,7 +57,7 @@ public class PersonsController {
         return personDtoConverter.convert(person);
     }
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
     @Transactional
     public List<PersonDto> getPersons(){
         List<Person> persons = personRepository.findAll();

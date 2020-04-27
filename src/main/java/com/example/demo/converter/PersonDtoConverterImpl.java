@@ -15,8 +15,10 @@ public class PersonDtoConverterImpl implements PersonDtoConverter {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+
     @Autowired
     private AddressDtoConverter addressDtoConverter;
+
     @Autowired
     private JobDtoConverter jobDtoConverter;
 
@@ -29,6 +31,7 @@ public class PersonDtoConverterImpl implements PersonDtoConverter {
     public PersonDto convert(Person person) {
         return new PersonDto(
                 person.getId(),
+                person.getUserName(),
                 person.getFirstName(),
                 person.getLastName(),
                 person.getAge(),

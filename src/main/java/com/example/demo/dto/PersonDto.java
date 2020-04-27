@@ -6,6 +6,7 @@ import java.util.UUID;
 public class PersonDto {
 
     private UUID id;
+    private String userName;
     private String firstName;
     private String lastName;
     private Integer age;
@@ -14,8 +15,9 @@ public class PersonDto {
     private Double salary;
     private String currency;
 
-    public PersonDto(UUID id, String firstName, String lastName, Integer age, List<AddressDto> addresses, List<JobDto> jobs, Double salary, String currency) {
+    public PersonDto(UUID id, String userName, String firstName, String lastName, Integer age, List<AddressDto> addresses, List<JobDto> jobs, Double salary, String currency) {
         this.id = id;
+        this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
@@ -27,6 +29,10 @@ public class PersonDto {
 
     public UUID getId() {
         return id;
+    }
+
+    public String getUserName() {
+        return userName;
     }
 
     public String getFirstName() {

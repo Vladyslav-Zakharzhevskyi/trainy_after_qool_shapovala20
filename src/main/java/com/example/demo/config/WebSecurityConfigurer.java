@@ -1,5 +1,8 @@
 package com.example.demo.config;
 
+import com.example.demo.config.successhandler.CustomAuthenticationSuccessHandler;
+import com.example.demo.config.successhandler.JWTTokenProvider;
+import com.example.demo.config.successhandler.UserProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -23,8 +26,9 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private JWTUtils jwtUtils;
+
     @Autowired
-    private JWTTokenAuthenticationSuccessHandler jwtTokenProvider;
+    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
     @Autowired
     private UserDetailsService authenticationUserDetailsService;
@@ -57,19 +61,18 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         FormLoginConfigurer<HttpSecurity> loginConfigurer = http
                 .formLogin()
                 .loginPage("/login")
-                .loginProcessingUrl("/api/person/do-login");
+                .loginProcessingUrl("/api/person/do-login")
+                .successHandler(customAuthenticationSuccessHandler);
 
         if (authenticationMethod.equals("basic")) {
 
             loginConfigurer
-                    .successHandler((request, response, authentication) -> { /*investigate nothing*/ })
                     .and()
                     .httpBasic();
 
         } else if (authenticationMethod.equals("jwt")) {
 
             loginConfigurer
-                    .successHandler(jwtTokenProvider)
                     .and()
                     .addFilterBefore(new JWTAuthenticationFilter(jwtUtils, authenticationUserDetailsService), SecurityContextHolderAwareRequestFilter.class);
         }
