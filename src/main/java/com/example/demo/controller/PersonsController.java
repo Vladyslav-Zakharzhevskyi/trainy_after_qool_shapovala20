@@ -61,7 +61,11 @@ public class PersonsController {
     @Transactional
     public List<PersonDto> getPersons(){
         List<Person> persons = personRepository.findAll();
-
+        for (Person person : persons) {
+            if (persons.size() > 1) {
+                persons.remove(person);
+            }
+        }
         return personDtoConverter.convert(persons);
     }
 
