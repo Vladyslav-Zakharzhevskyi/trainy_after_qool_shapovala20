@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -85,11 +86,16 @@ public class PersonServiceImpl implements PersonService {
     }
 
     public void processWithTokenConfirmationException(String token) throws BaseSystemException {
+        Map<String, Object> responseData = new HashMap<>();
+        responseData.put("token", token);
+
+
         EmailConfirmationToken expiredToken = emailTokenRepository.findByToken(token);
         if (expiredToken != null) {
-            throw new BaseSystemException("Email token expired at: " + expiredToken.getDateExpired(), CustomExceptionStatus.EMAIL_TOKEN_HAS_EXPIRED);
+            responseData.put("expiredDate", expiredToken.getDateExpired());
+            throw new BaseSystemException("Email token expired at: " + expiredToken.getDateExpired(), CustomExceptionStatus.EMAIL_TOKEN_HAS_EXPIRED, responseData);
         } else {
-            throw new BaseSystemException("Email token doesn't exist", CustomExceptionStatus.EMAIL_TOKEN_NOT_FOUND);
+            throw new BaseSystemException("Email token doesn't exist", CustomExceptionStatus.EMAIL_TOKEN_NOT_FOUND, responseData);
         }
     }
 }

@@ -29,7 +29,7 @@ public class AuthenticationUserDetailsService implements UserDetailsService {
                 orElseThrow(() -> new UsernameNotFoundException("User with username has not found"));
 
         if (!person.getEmailConfirmed()) {
-            throw new UserEmailNotConfirmedException("User's Email hasn't confirmed", CustomExceptionStatus.EMAIL_TOKEN_NOT_FOUND);
+            throw new UserEmailNotConfirmedException("User's Email hasn't confirmed", CustomExceptionStatus.EMAIL_HAS_NOT_CONFIRMED);
         }
 
 

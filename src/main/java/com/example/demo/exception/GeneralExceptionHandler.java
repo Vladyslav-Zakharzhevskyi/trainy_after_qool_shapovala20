@@ -15,7 +15,7 @@ public class GeneralExceptionHandler {
 
     @ExceptionHandler(BaseSystemException.class)
     public ResponseEntity<ExceptionResponse> handleBaseSystemError(BaseSystemException ex) {
-        return new ResponseEntity<>(new ExceptionResponse("Backend Error", ex.toString(), ex.getStatus().getCode()), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(new ExceptionResponse("Backend Error", ex.toString(), ex.getStatus().getCode(), ex.getData()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(UserEmailNotConfirmedException.class)
