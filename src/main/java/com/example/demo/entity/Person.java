@@ -30,6 +30,12 @@ public class Person extends BaseEntity {
     @Column(name = "last_name", columnDefinition = "varchar(20)", nullable = false)
     private String lastName;
 
+    @Column(name = "email", columnDefinition = "varchar(40)", nullable = false)
+    private String email;
+
+    @Column(name = "email_confirmed", columnDefinition = "boolean")
+    private Boolean emailConfirmed = Boolean.TRUE;
+
     @Column(name = "password", columnDefinition = "varchar(60)", nullable = false)
     private String password;
 
@@ -77,6 +83,22 @@ public class Person extends BaseEntity {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Boolean getEmailConfirmed() {
+        return emailConfirmed;
+    }
+
+    public void setEmailConfirmed(Boolean emailConfirmed) {
+        this.emailConfirmed = emailConfirmed;
     }
 
     public String getPassword() {

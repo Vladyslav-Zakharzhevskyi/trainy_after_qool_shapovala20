@@ -2,9 +2,10 @@ package com.example.demo.service;
 
 import com.example.demo.entity.HomeBusinessUser;
 import com.example.demo.entity.Person;
+import com.example.demo.exception.CustomExceptionStatus;
+import com.example.demo.exception.UserEmailNotConfirmedException;
 import com.example.demo.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,8 +24,14 @@ public class AuthenticationUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Person> personByUserName = personRepository.findPersonByUserName(username);
 
+
         Person person = personByUserName.
                 orElseThrow(() -> new UsernameNotFoundException("User with username has not found"));
+
+        if (!person.getEmailConfirmed()) {
+            throw new UserEmailNotConfirmedException("User's Email hasn't confirmed", CustomExceptionStatus.EMAIL_HAS_NOT_CONFIRMED);
+        }
+
 
         return new HomeBusinessUser(person.getId(), username, person.getPassword(),
                                     Collections.emptyList(), person.getFirstName(), person.getLastName());

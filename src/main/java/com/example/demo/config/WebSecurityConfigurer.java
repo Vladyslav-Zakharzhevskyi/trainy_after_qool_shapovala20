@@ -1,8 +1,6 @@
 package com.example.demo.config;
 
 import com.example.demo.config.successhandler.CustomAuthenticationSuccessHandler;
-import com.example.demo.config.successhandler.JWTTokenProvider;
-import com.example.demo.config.successhandler.UserProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -55,6 +53,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/person/do-login").permitAll()
                 .antMatchers("/api/person/register").permitAll()
                 .antMatchers("/api/person/checkUserNameAvailability/*").permitAll()
+                .antMatchers("/api/person/confirmEmail").permitAll()
                 .antMatchers("/api/getApplicationSettings").permitAll()
                 .anyRequest().authenticated();
 

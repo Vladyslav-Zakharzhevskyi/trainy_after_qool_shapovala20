@@ -5,11 +5,14 @@ import com.example.demo.dto.NewPersonDto;
 import com.example.demo.dto.PersonDto;
 import com.example.demo.entity.HomeBusinessUser;
 import com.example.demo.entity.Person;
+import com.example.demo.exception.BaseSystemException;
 import com.example.demo.repository.PersonRepository;
+import com.example.demo.response.BaseResponseEntity;
 import com.example.demo.service.PersonService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -45,7 +49,7 @@ public class PersonsController {
     public ResponseEntity<PersonDto> registerPerson(@RequestBody NewPersonDto newPersonDto) {
         Person person = personDtoConverter.convert(newPersonDto);
 
-        Person savedPerson = personService.save(person);
+        Person savedPerson = personService.doRegistration(person);
 
         return ResponseEntity.ok(personDtoConverter.convert(savedPerson));
     }
@@ -59,7 +63,7 @@ public class PersonsController {
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     @Transactional
-    public List<PersonDto> getPersons(){
+    public List<PersonDto> getPersons() {
         List<Person> persons = personRepository.findAll();
         for (Person person : persons) {
             if (persons.size() > 1) {
@@ -78,5 +82,17 @@ public class PersonsController {
         return ResponseEntity.ok(result);
     }
 
+    @RequestMapping(value = "/confirmEmail", method = RequestMethod.GET)
+    public ResponseEntity<BaseResponseEntity> confirmEmail(@RequestParam(name = "token") String token) throws BaseSystemException {
+
+        Person person = personService.doEmailConfirmationWithToken(token);
+
+        Map<String, String> response = new HashMap<>();
+        response.put("username", person.getUserName());
+
+        BaseResponseEntity successfulConfirmation = new BaseResponseEntity("Email has been confirmed!", 200, response);
+        return new ResponseEntity<BaseResponseEntity>(successfulConfirmation, HttpStatus.OK);
+
+    }
 
 }

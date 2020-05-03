@@ -34,6 +34,7 @@ public class PersonDtoConverterImpl implements PersonDtoConverter {
                 person.getUserName(),
                 person.getFirstName(),
                 person.getLastName(),
+                person.getEmail(),
                 person.getAge(),
                 addressDtoConverter.convert(person.getAddresses(), false),
                 jobDtoConverter.convert(person.getJobs(), false),
@@ -48,6 +49,7 @@ public class PersonDtoConverterImpl implements PersonDtoConverter {
         person.setUserName(newPersonDto.getUserName());
         person.setFirstName(newPersonDto.getFirstName());
         person.setLastName(newPersonDto.getLastName());
+        person.setEmail(newPersonDto.getEmail());
         person.setPassword(passwordEncoder.encode(newPersonDto.getPassword()));
 
         return person;
