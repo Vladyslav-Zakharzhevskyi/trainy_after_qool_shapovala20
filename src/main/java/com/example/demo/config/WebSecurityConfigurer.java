@@ -49,7 +49,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/login").permitAll()
-                .antMatchers("/img/favicon.png").permitAll()
+                .antMatchers("/favicon.ico").permitAll()
                 .antMatchers("/api/person/do-login").permitAll()
                 .antMatchers("/api/person/register").permitAll()
                 .antMatchers("/api/person/checkUserNameAvailability/*").permitAll()

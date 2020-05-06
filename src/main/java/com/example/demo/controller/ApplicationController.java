@@ -19,7 +19,7 @@ public class ApplicationController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String welcomeMessage() {
-        return "redirect-to-firebase";
+        return "index";
     }
 
     @RequestMapping(value = "/api/getApplicationSettings", method = RequestMethod.GET)
