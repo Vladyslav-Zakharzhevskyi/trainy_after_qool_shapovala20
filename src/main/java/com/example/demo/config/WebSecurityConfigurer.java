@@ -1,6 +1,5 @@
 package com.example.demo.config;
 
-import com.example.demo.config.successhandler.CustomAuthenticationSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +13,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.FormLoginConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter;
 
@@ -26,7 +27,10 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     private JWTUtils jwtUtils;
 
     @Autowired
-    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+    private AuthenticationSuccessHandler authenticationSuccessHandler;
+
+    @Autowired
+    private AuthenticationFailureHandler authenticationFailureHandler;
 
     @Autowired
     private UserDetailsService authenticationUserDetailsService;
@@ -61,7 +65,8 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/api/person/do-login")
-                .successHandler(customAuthenticationSuccessHandler);
+                .successHandler(authenticationSuccessHandler)
+                .failureHandler(authenticationFailureHandler);
 
         if (authenticationMethod.equals("basic")) {
 
@@ -95,6 +100,8 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setUserDetailsService(authenticationUserDetailsService);
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
+        daoAuthenticationProvider.setHideUserNotFoundExceptions(false);
+
         return daoAuthenticationProvider;
     }
 
