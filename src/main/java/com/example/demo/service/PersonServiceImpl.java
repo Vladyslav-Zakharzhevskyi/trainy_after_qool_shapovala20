@@ -13,6 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.Date;
@@ -39,6 +40,7 @@ public class PersonServiceImpl implements PersonService {
     private EMailSender eMailSender;
 
     @Override
+    @Transactional
     public Person doRegistration(Person person) {
 
         Person savedPerson = personRepository.save(person);
@@ -46,8 +48,10 @@ public class PersonServiceImpl implements PersonService {
         if (propertyService.getSystemPropertyAsBoolean(SystemPropertyKeys.IS_EMAILS_CONFIRMATION_ENABLED_KEY)) {
             EmailConfirmationToken token = new EmailConfirmationToken(UUID.randomUUID().toString(), savedPerson, DateUtil.currentDateWithIncreasedHours(2));
             token = emailTokenRepository.save(token);
+            // Set confirmation flag to false
+            person.setEmailConfirmed(Boolean.FALSE);
             // Send confirmation email to User
-            eMailSender.sendConfirmEmailLetter(person, token);
+            eMailSender.sendEmailLetter(person, token);
             // Update person
             savedPerson = personRepository.save(person);
         }
