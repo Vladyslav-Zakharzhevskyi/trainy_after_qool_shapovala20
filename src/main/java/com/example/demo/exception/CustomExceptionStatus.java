@@ -1,6 +1,7 @@
 package com.example.demo.exception;
 
 public enum CustomExceptionStatus {
+    GENERAL_EXCEPTION(500, "Some internal server error"),
     EMAIL_TOKEN_NOT_FOUND(450, "Email token has not been found"),
     EMAIL_TOKEN_HAS_EXPIRED(452, "Used token has been expired"),
     EMAIL_HAS_NOT_CONFIRMED(455, "User has not confirmed his email yet."),
