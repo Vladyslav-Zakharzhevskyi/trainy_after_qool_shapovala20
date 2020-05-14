@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 @Component
 public class PersonDtoConverterImpl implements PersonDtoConverter {
 
@@ -38,6 +40,7 @@ public class PersonDtoConverterImpl implements PersonDtoConverter {
                 person.getAge(),
                 addressDtoConverter.convert(person.getAddresses(), false),
                 jobDtoConverter.convert(person.getJobs(), false),
+                person.getPosition() != null ? person.getPosition().getId() : -1,
                 person.getSalary(),
                 person.getCurrency() != null ? person.getCurrency().name() : ""
         );
