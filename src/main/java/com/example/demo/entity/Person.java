@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +52,10 @@ public class Person extends BaseEntity {
                     joinColumns = {@JoinColumn(name = "person_id")},
                     inverseJoinColumns = {@JoinColumn(name = "job_id")})
     private List<Job> jobs = new ArrayList<>();
+
+    @OneToOne
+    @JoinColumn(name = "position_id")
+    private Position position;
 
     @Column(name = "salary", columnDefinition = "double precision")
     private Double salary;
@@ -147,6 +152,14 @@ public class Person extends BaseEntity {
         }
         jobs.add(job);
         job.addEmployee(this);
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
     }
 
     public Double getSalary() {

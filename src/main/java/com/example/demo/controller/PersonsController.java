@@ -46,19 +46,25 @@ public class PersonsController {
     private PersonService personService;
 
     @RequestMapping(value = "register", method = RequestMethod.POST)
-    public ResponseEntity<PersonDto> registerPerson(@RequestBody NewPersonDto newPersonDto) {
+    public ResponseEntity<PersonDto> registerPerson(@RequestBody com.example.demo.dto.NewPersonDto newPersonDto) {
         Person person = personDtoConverter.convert(newPersonDto);
 
-        Person savedPerson = personService.doRegistration(person);
+        Person savedPerson = personService.createPersonWithRegistration(person);
 
         return ResponseEntity.ok(personDtoConverter.convert(savedPerson));
     }
 
-    @RequestMapping(value = "current", method = RequestMethod.GET)
-    public PersonDto getCurrentLoggedInUser(@AuthenticationPrincipal(errorOnInvalidType = true) HomeBusinessUser user) {
+    @RequestMapping(method = RequestMethod.GET)
+    public PersonDto getCurrentLoggedInUser(@AuthenticationPrincipal HomeBusinessUser user) {
         Optional<Person> personByUserName = personRepository.findPersonByUserName(user.getUsername());
         Person person = personByUserName.orElseThrow(() -> new UsernameNotFoundException("User with username has not found"));
         return personDtoConverter.convert(person);
+    }
+
+    @RequestMapping(method = RequestMethod.PUT)
+    public PersonDto updatePerson(@AuthenticationPrincipal HomeBusinessUser user, @RequestBody NewPersonDto personDto) throws BaseSystemException {
+        Person updatedPerson  = personService.updatePerson(personDto);
+        return personDtoConverter.convert(updatedPerson);
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
@@ -92,7 +98,6 @@ public class PersonsController {
 
         BaseResponseEntity successfulConfirmation = new BaseResponseEntity("Email has been confirmed!", 200, response);
         return new ResponseEntity<BaseResponseEntity>(successfulConfirmation, HttpStatus.OK);
-
     }
 
 }
