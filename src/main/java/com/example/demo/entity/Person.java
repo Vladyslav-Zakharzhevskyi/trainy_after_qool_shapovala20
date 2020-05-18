@@ -64,6 +64,9 @@ public class Person extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Currency currency;
 
+    @Column(name = "address")
+    private String address;
+
     public Person() {}
 
     public String getUserName() {
@@ -170,14 +173,6 @@ public class Person extends BaseEntity {
         this.salary = salary;
     }
 
-    @Override
-    public String toString() {
-        return "Person{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                '}';
-    }
-
     public Currency getCurrency() {
         return currency;
     }
@@ -186,10 +181,19 @@ public class Person extends BaseEntity {
         this.currency = currency;
     }
 
-    public boolean containAddress(Address address) {
-        if (address == null || address.getId() == null) {
-            return false;
-        }
-        return addresses.contains(address);
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                '}';
     }
 }

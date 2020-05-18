@@ -16,8 +16,9 @@ public class PersonDto {
     private Integer positionId;
     private Double salary;
     private String currency;
+    private String address;
 
-    public PersonDto(UUID id, String userName, String firstName, String lastName, String email, Integer age, List<AddressDto> addresses, List<JobDto> jobs, Integer positionId, Double salary, String currency) {
+    public PersonDto(UUID id, String userName, String firstName, String lastName, String email, Integer age, List<AddressDto> addresses, List<JobDto> jobs, Integer positionId, Double salary, String currency, String address) {
         this.id = id;
         this.userName = userName;
         this.firstName = firstName;
@@ -29,6 +30,7 @@ public class PersonDto {
         this.positionId = positionId;
         this.salary = salary;
         this.currency = currency;
+        this.address = address;
     }
 
     public UUID getId() {
@@ -73,5 +75,9 @@ public class PersonDto {
 
     public Integer getPositionId() {
         return positionId;
+    }
+
+    public String getAddress() {
+        return address;
     }
 }

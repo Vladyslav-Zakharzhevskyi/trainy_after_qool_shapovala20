@@ -78,6 +78,7 @@ public class PersonServiceImpl implements PersonService {
             originalPerson.setSalary(personDto.getSalary());
             originalPerson.setCurrency(personDto.getCurrency());
             originalPerson.setPosition(positionRepository.getOne(personDto.getPositionId()));
+            originalPerson.setAddress(personDto.getAddress());
             return originalPerson;
         }).orElseThrow(() -> new BaseSystemException(String.format("Person with id %s not found", personDto.getId()), CustomExceptionStatus.GENERAL_EXCEPTION));
 

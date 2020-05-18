@@ -42,7 +42,8 @@ public class PersonDtoConverterImpl implements PersonDtoConverter {
                 jobDtoConverter.convert(person.getJobs(), false),
                 person.getPosition() != null ? person.getPosition().getId() : -1,
                 person.getSalary(),
-                person.getCurrency() != null ? person.getCurrency().name() : ""
+                person.getCurrency() != null ? person.getCurrency().name() : "",
+                person.getAddress()
         );
     }
 

@@ -19,6 +19,7 @@ public class NewPersonDto {
     private Integer age;
     private Double salary;
     private Currency currency;
+    private String address;
 
     @JsonCreator
     public NewPersonDto(@JsonProperty(value = "id") UUID id,
@@ -30,9 +31,11 @@ public class NewPersonDto {
                         @JsonProperty(value = "positionId") Integer positionId,
                         @JsonProperty(value = "age") Integer age,
                         @JsonProperty(value = "salary") Double salary,
-                        @JsonProperty(value = "currency") Currency currency
+                        @JsonProperty(value = "currency") Currency currency,
+                        @JsonProperty(value = "address") String address
 
     ) {
+
         this.id = id;
         this.userName = userName;
         this.firstName = firstName;
@@ -43,6 +46,7 @@ public class NewPersonDto {
         this.age = age;
         this.salary = salary;
         this.currency = currency;
+        this.address = address;
     }
 
     public UUID getId() {
@@ -83,5 +87,9 @@ public class NewPersonDto {
 
     public Integer getPositionId() {
         return positionId;
+    }
+
+    public String getAddress() {
+        return address;
     }
 }
