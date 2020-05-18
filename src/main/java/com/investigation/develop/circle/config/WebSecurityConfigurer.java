@@ -43,6 +43,14 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     private final String defaultAuthenticationMethod = "basic";
 
+    private final String[] SWAGGER_ALLOWED_LIST = {
+            "/v2/api-docs",
+            "/configuration/ui",
+            "/swagger-resources/**",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/webjars/**"};
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         if (null == authenticationMethod || authenticationMethod.isEmpty()) {
@@ -59,6 +67,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/person/checkUserNameAvailability/*").permitAll()
                 .antMatchers("/api/person/confirmEmail").permitAll()
                 .antMatchers("/api/getApplicationSettings").permitAll()
+                .antMatchers(SWAGGER_ALLOWED_LIST).permitAll()
                 .anyRequest().authenticated();
 
         FormLoginConfigurer<HttpSecurity> loginConfigurer = http
