@@ -11,22 +11,18 @@ public class PersonDto {
     private String lastName;
     private String email;
     private Integer age;
-    private List<AddressDto> addresses;
-    private List<JobDto> jobs;
     private Integer positionId;
     private Double salary;
     private String currency;
     private String address;
 
-    public PersonDto(UUID id, String userName, String firstName, String lastName, String email, Integer age, List<AddressDto> addresses, List<JobDto> jobs, Integer positionId, Double salary, String currency, String address) {
+    public PersonDto(UUID id, String userName, String firstName, String lastName, String email, Integer age, Integer positionId, Double salary, String currency, String address) {
         this.id = id;
         this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.age = age;
-        this.addresses = addresses;
-        this.jobs = jobs;
         this.positionId = positionId;
         this.salary = salary;
         this.currency = currency;
@@ -55,14 +51,6 @@ public class PersonDto {
 
     public Integer getAge() {
         return age;
-    }
-
-    public List<AddressDto> getAddresses() {
-        return addresses;
-    }
-
-    public List<JobDto> getJobs() {
-        return jobs;
     }
 
     public Double getSalary() {

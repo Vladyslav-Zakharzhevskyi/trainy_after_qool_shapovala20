@@ -1,25 +1,15 @@
 package com.example.demo.entity;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
-@Table(name = "persons")
+@Table(name = "person")
 public class Person extends BaseEntity {
 
     @Column(name = "user_name", columnDefinition = "varchar(20)", nullable = false)
@@ -42,16 +32,6 @@ public class Person extends BaseEntity {
 
     @Column(name = "age", columnDefinition = "integer")
     private Integer age;
-
-    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Address> addresses = new ArrayList<>();
-
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @ManyToMany
-    @JoinTable(name = "persons_has_jobs",
-                    joinColumns = {@JoinColumn(name = "person_id")},
-                    inverseJoinColumns = {@JoinColumn(name = "job_id")})
-    private List<Job> jobs = new ArrayList<>();
 
     @OneToOne
     @JoinColumn(name = "position_id")
@@ -123,38 +103,6 @@ public class Person extends BaseEntity {
 
     public void setAge(Integer age) {
         this.age = age;
-    }
-
-    public List<Address> getAddresses() {
-        return addresses;
-    }
-
-    public void setAddresses(List<Address> addresses) {
-        this.addresses = addresses;
-    }
-
-    public void addAddress(Address address) {
-        if (addresses.contains(address)) {
-            return;
-        }
-        addresses.add(address);
-        address.setPerson(this);
-    }
-
-    public List<Job> getJobs() {
-        return jobs;
-    }
-
-    public void setJobs(List<Job> jobs) {
-        this.jobs = jobs;
-    }
-
-    public void addJob(Job job) {
-        if (jobs.contains(job)) {
-            return;
-        }
-        jobs.add(job);
-        job.addEmployee(this);
     }
 
     public Position getPosition() {

@@ -18,12 +18,6 @@ public class PersonDtoConverterImpl implements PersonDtoConverter {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    @Autowired
-    private AddressDtoConverter addressDtoConverter;
-
-    @Autowired
-    private JobDtoConverter jobDtoConverter;
-
     @Override
     public List<PersonDto> convert(List<Person> persons) {
         return persons.stream().map(this::convert).collect(Collectors.toList());
@@ -38,8 +32,6 @@ public class PersonDtoConverterImpl implements PersonDtoConverter {
                 person.getLastName(),
                 person.getEmail(),
                 person.getAge(),
-                addressDtoConverter.convert(person.getAddresses(), false),
-                jobDtoConverter.convert(person.getJobs(), false),
                 person.getPosition() != null ? person.getPosition().getId() : -1,
                 person.getSalary(),
                 person.getCurrency() != null ? person.getCurrency().name() : "",
