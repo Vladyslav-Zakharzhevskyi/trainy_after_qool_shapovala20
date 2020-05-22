@@ -12,7 +12,7 @@ import java.util.Optional;
 @Service
 public class ApplicationService {
 
-    private final static String ENUM_PATH_PREFIX = "com.example.demo.entity.";
+    private final static String ENUM_PATH_PREFIX = "com.investigation.develop.circle.entity.";
 
     public Object getDataByRepository(String repositoryName) throws BaseSystemException {
 

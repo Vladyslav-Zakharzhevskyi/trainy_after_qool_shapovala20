@@ -1,6 +1,7 @@
 package com.investigation.develop.circle.config.successhandler;
 
 import com.investigation.develop.circle.config.JWTUtils;
+import com.investigation.develop.circle.entity.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
@@ -20,7 +21,7 @@ public class JWTTokenProvider {
                                         HttpServletResponse response,
                                         Authentication authentication) {
 
-        String jwtToken = jwtUtils.generateJwtToken((User) authentication.getPrincipal());
+        String jwtToken = jwtUtils.generateJwtToken((Person) authentication.getPrincipal());
         response.addHeader("Authentication", jwtToken);
     }
 

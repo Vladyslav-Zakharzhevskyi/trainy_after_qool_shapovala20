@@ -1,7 +1,12 @@
 package com.investigation.develop.circle.controller;
 
-import com.investigation.develop.circle.entity.HomeBusinessUser;
+import com.google.common.base.Strings;
+import com.investigation.develop.circle.converter.DtoConverter;
+import com.investigation.develop.circle.dto.OfferDto;
+import com.investigation.develop.circle.entity.Offer;
 import com.investigation.develop.circle.exception.BaseSystemException;
+import com.investigation.develop.circle.exception.CustomExceptionStatus;
+import com.investigation.develop.circle.service.OfferService;
 import com.investigation.develop.circle.service.PersonService;
 import com.investigation.develop.circle.converter.PersonDtoConverter;
 import com.investigation.develop.circle.dto.NewPersonDto;
@@ -9,11 +14,14 @@ import com.investigation.develop.circle.dto.PersonDto;
 import com.investigation.develop.circle.entity.Person;
 import com.investigation.develop.circle.repository.PersonRepository;
 import com.investigation.develop.circle.response.BaseResponseEntity;
+import com.investigation.develop.circle.service.SecurityService;
+import com.investigation.develop.circle.system.Context;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,10 +32,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 
 @RestController
@@ -37,6 +47,9 @@ public class PersonsController {
     private Logger logger = LogManager.getLogger(PersonsController.class);
 
     @Autowired
+    private SecurityService securityService;
+
+    @Autowired
     private PersonDtoConverter personDtoConverter;
 
     @Autowired
@@ -44,6 +57,10 @@ public class PersonsController {
 
     @Autowired
     private PersonService personService;
+
+    @Autowired
+    private OfferService offerService;
+
 
     @RequestMapping(value = "register", method = RequestMethod.POST)
     public ResponseEntity<PersonDto> registerPerson(@RequestBody NewPersonDto newPersonDto) {
@@ -55,14 +72,14 @@ public class PersonsController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public PersonDto getCurrentLoggedInUser(@AuthenticationPrincipal HomeBusinessUser user) {
+    public PersonDto getCurrentLoggedInUser(@AuthenticationPrincipal Person user) {
         Optional<Person> personByUserName = personRepository.findPersonByUserName(user.getUsername());
         Person person = personByUserName.orElseThrow(() -> new UsernameNotFoundException("User with username has not found"));
         return personDtoConverter.convert(person);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public PersonDto updatePerson(@AuthenticationPrincipal HomeBusinessUser user, @RequestBody NewPersonDto personDto) throws BaseSystemException {
+    public PersonDto updatePerson(@AuthenticationPrincipal Person user, @RequestBody NewPersonDto personDto) throws BaseSystemException {
         Person updatedPerson  = personService.updatePerson(personDto);
         return personDtoConverter.convert(updatedPerson);
     }
@@ -98,6 +115,52 @@ public class PersonsController {
 
         BaseResponseEntity successfulConfirmation = new BaseResponseEntity("Email has been confirmed!", 200, response);
         return new ResponseEntity<BaseResponseEntity>(successfulConfirmation, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/offer", method = RequestMethod.GET)
+    public List<OfferDto> getAllProposalsToImplement() {
+        List<Offer> allOffers = offerService.getActiveOffers();
+        return DtoConverter.convert(allOffers);
+    }
+
+    @RequestMapping(value = "/offer", method = RequestMethod.POST)
+    public List<OfferDto> addProposalMessage(@RequestParam(name = "message") String message,
+                                             @RequestParam(name = "anonymousPost") Boolean postIsAnonymous,
+                                             Principal p) throws BaseSystemException {
+
+        checkProposalMessageNotEmpty(message);
+
+        offerService.addOffer(message, postIsAnonymous, Context.getUser(p));
+
+        return getAllProposalsToImplement();
+    }
+
+    private void checkProposalMessageNotEmpty(@RequestParam(name = "message") String message) throws BaseSystemException {
+        if (Strings.isNullOrEmpty(message)) {
+            throw new BaseSystemException("Proposal should not be empty", CustomExceptionStatus.VALUE_MISS_MATCH);
+        }
+    }
+
+    @RequestMapping(value = "/offer/{offerId}", method = RequestMethod.PUT)
+    @PreAuthorize("@securityService.checkEnableToEditOffer(#offerId, #p)")
+    public List<OfferDto> updateProposalMessage(@PathVariable(name = "offerId") Long offerId,
+                                                @RequestParam(name = "message") String message,
+                                                @RequestParam(name = "anonymousPost") Boolean postIsAnonymous,
+                                                Principal p) throws BaseSystemException {
+
+        checkProposalMessageNotEmpty(message);
+
+        offerService.updateOffer(offerId, message, postIsAnonymous);
+
+        return getAllProposalsToImplement();
+    }
+
+    @RequestMapping(value = "/offer/{offerId}", method = RequestMethod.DELETE)
+    @PreAuthorize("@securityService.checkEnableToEditOffer(#offerId, #p)")
+    public List<OfferDto> deleteProposalMessage(@PathVariable(name = "offerId") Long offerId,
+                                                Principal p) throws BaseSystemException {
+        offerService.deleteOffer(offerId);
+        return getAllProposalsToImplement();
     }
 
 }

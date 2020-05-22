@@ -1,5 +1,6 @@
 package com.investigation.develop.circle.config;
 
+import com.investigation.develop.circle.entity.Person;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
@@ -25,9 +26,9 @@ public class JWTUtils {
 
     private Integer expiredTimeMs = 60000 * 60 * 3; /*3 HOURS*/
 
-    public String generateJwtToken(User principal) {
+    public String generateJwtToken(Person user) {
         return Jwts.builder()
-                .setSubject(principal.getUsername())
+                .setSubject(user.getUsername())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expiredTimeMs))
                 .signWith(SignatureAlgorithm.HS512, secretKey)

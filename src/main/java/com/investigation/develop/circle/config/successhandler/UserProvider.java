@@ -1,6 +1,5 @@
 package com.investigation.develop.circle.config.successhandler;
 
-import com.investigation.develop.circle.entity.HomeBusinessUser;
 import com.investigation.develop.circle.converter.PersonDtoConverter;
 import com.investigation.develop.circle.dto.PersonDto;
 import com.investigation.develop.circle.entity.Person;
@@ -34,10 +33,10 @@ public class UserProvider {
             HttpServletResponse response,
             Authentication authentication) throws IOException, ServletException {
 
-        HomeBusinessUser principal = (HomeBusinessUser) authentication.getPrincipal();
+        Person principal = (Person) authentication.getPrincipal();
 
-        Optional<Person> personRepo = personRepository.findById(principal.getId());
-        String user = personRepo
+        Optional<Person> personObject = personRepository.findById(principal.getId());
+        String user = personObject
                 .map(person -> personDtoConverter.convert(person))
                 .map(this::prepareResponseBody)
                 .orElse("");
