@@ -1,6 +1,6 @@
 package com.investigation.develop.circle.exception;
 
-public enum CustomExceptionStatus {
+public enum Code {
     GENERAL_EXCEPTION(500, "Internal server error"),
     VALUE_MISS_MATCH(415, "Provided value has inconsistent state"),
     VALIDATION_EXCEPTION(405, "Validation exception has occured"),
@@ -11,16 +11,16 @@ public enum CustomExceptionStatus {
     USER_NAME_NOT_FOUND(321, "User name not found"),
     BAD_CREDENTIALS(322, "Wrong Password");
 
-    private int code;
+    private int value;
     private String description;
 
-    CustomExceptionStatus(int code, String description) {
-        this.code = code;
+    Code(int value, String description) {
+        this.value = value;
         this.description = description;
     }
 
-    public int getCode() {
-        return code;
+    public int getValue() {
+        return value;
     }
 
     public String getDescription() {

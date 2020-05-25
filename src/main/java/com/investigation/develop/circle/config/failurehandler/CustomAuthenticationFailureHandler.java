@@ -1,6 +1,6 @@
 package com.investigation.develop.circle.config.failurehandler;
 
-import com.investigation.develop.circle.exception.CustomExceptionStatus;
+import com.investigation.develop.circle.exception.Code;
 import com.investigation.develop.circle.exception.UserEmailNotConfirmedException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
@@ -55,11 +55,11 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
     private Integer getStatusCode(AuthenticationException ex) {
         Integer statusCode = null;
         if (ex instanceof UserEmailNotConfirmedException) {
-            statusCode = ((UserEmailNotConfirmedException) ex).getStatus().getCode();
+            statusCode = ((UserEmailNotConfirmedException) ex).getCode().getValue();
         } else if (ex instanceof UsernameNotFoundException){
-            statusCode = CustomExceptionStatus.USER_NAME_NOT_FOUND.getCode();
+            statusCode = Code.USER_NAME_NOT_FOUND.getValue();
         } else if (ex instanceof BadCredentialsException) {
-            statusCode = CustomExceptionStatus.BAD_CREDENTIALS.getCode();
+            statusCode = Code.BAD_CREDENTIALS.getValue();
         }
         return statusCode;
     }

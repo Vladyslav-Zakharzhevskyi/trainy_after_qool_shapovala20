@@ -4,17 +4,17 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @MappedSuperclass
-public class BaseEntity {
+public class BaseModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private UUID id;
 
-    public BaseEntity() {
+    public BaseModel() {
     }
 
-    public BaseEntity(UUID id) {
+    public BaseModel(UUID id) {
         this.id = id;
     }
 

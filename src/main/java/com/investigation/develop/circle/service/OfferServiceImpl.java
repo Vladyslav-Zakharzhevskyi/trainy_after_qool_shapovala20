@@ -2,8 +2,8 @@ package com.investigation.develop.circle.service;
 
 import com.investigation.develop.circle.entity.Offer;
 import com.investigation.develop.circle.entity.Person;
-import com.investigation.develop.circle.exception.BaseSystemException;
-import com.investigation.develop.circle.exception.CustomExceptionStatus;
+import com.investigation.develop.circle.exception.ApplicationException;
+import com.investigation.develop.circle.exception.Code;
 import com.investigation.develop.circle.repository.OfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,7 +36,7 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public Offer updateOffer(Long offerId, String message, boolean isAnonymous) throws BaseSystemException {
+    public Offer updateOffer(Long offerId, String message, boolean isAnonymous) throws ApplicationException {
         Optional<Offer> offer = offerRepository.findById(offerId);
 
         Offer updatedOffer = offer.map(origin -> {
@@ -44,20 +44,20 @@ public class OfferServiceImpl implements OfferService {
             origin.setUpdatedAt(Date.from(Instant.now()));
             origin.setPostedAnonymously(isAnonymous);
             return origin;
-        }).orElseThrow(() -> new BaseSystemException(String.format("Can't update message, due it has not found, id: %S", offerId), CustomExceptionStatus.GENERAL_EXCEPTION));
+        }).orElseThrow(() -> new ApplicationException(String.format("Can't update message, due it has not found, id: %S", offerId), Code.GENERAL_EXCEPTION));
 
         return offerRepository.save(updatedOffer);
     }
 
     @Override
-    public void deleteOffer(Long offerId) throws BaseSystemException {
+    public void deleteOffer(Long offerId) throws ApplicationException {
         Optional<Offer> offerToArchive = offerRepository.findById(offerId);
 
         Offer archived = offerToArchive.map(offer -> {
             offer.setArchived(true);
             offer.setUpdatedAt(Date.from(Instant.now()));
             return offer;
-        }).orElseThrow(() -> new BaseSystemException(String.format("Offer with id: %s doesn't found", offerId), CustomExceptionStatus.VALUE_MISS_MATCH));
+        }).orElseThrow(() -> new ApplicationException(String.format("Offer with id: %s doesn't found", offerId), Code.VALUE_MISS_MATCH));
 
         offerRepository.save(archived);
     }

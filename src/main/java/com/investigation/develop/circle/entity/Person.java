@@ -15,7 +15,7 @@ import java.util.Collections;
 
 @Entity
 @Table(name = "person")
-public class Person extends BaseEntity implements UserDetails {
+public class Person extends BaseModel implements UserDetails {
 
     @Column(name = "user_name", columnDefinition = "varchar(20)", nullable = false)
     private String userName;

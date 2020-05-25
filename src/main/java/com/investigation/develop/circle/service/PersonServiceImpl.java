@@ -3,8 +3,8 @@ package com.investigation.develop.circle.service;
 import com.investigation.develop.circle.dto.NewPersonDto;
 import com.investigation.develop.circle.entity.EmailConfirmationToken;
 import com.investigation.develop.circle.entity.Person;
-import com.investigation.develop.circle.exception.BaseSystemException;
-import com.investigation.develop.circle.exception.CustomExceptionStatus;
+import com.investigation.develop.circle.exception.ApplicationException;
+import com.investigation.develop.circle.exception.Code;
 import com.investigation.develop.circle.repository.EmailTokenRepository;
 import com.investigation.develop.circle.repository.PersonRepository;
 import com.investigation.develop.circle.repository.PositionRepository;
@@ -65,10 +65,10 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public Person updatePerson(NewPersonDto personDto) throws BaseSystemException {
+    public Person updatePerson(NewPersonDto personDto) throws ApplicationException {
         UUID personId = personDto.getId();
         if (personId == null) {
-            throw new BaseSystemException("There is request to update person without id", CustomExceptionStatus.GENERAL_EXCEPTION);
+            throw new ApplicationException("There is request to update person without id", Code.GENERAL_EXCEPTION);
         }
         Person person = personRepository.findById(personId).map(originalPerson -> {
             originalPerson.setFirstName(personDto.getFirstName());
@@ -80,7 +80,7 @@ public class PersonServiceImpl implements PersonService {
             originalPerson.setPosition(positionRepository.getOne(personDto.getPositionId()));
             originalPerson.setAddress(personDto.getAddress());
             return originalPerson;
-        }).orElseThrow(() -> new BaseSystemException(String.format("Person with id %s not found", personDto.getId()), CustomExceptionStatus.GENERAL_EXCEPTION));
+        }).orElseThrow(() -> new ApplicationException(String.format("Person with id %s not found", personDto.getId()), Code.GENERAL_EXCEPTION));
 
         return personRepository.save(person);
     }
@@ -102,7 +102,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public Person doEmailConfirmationWithToken(String token) throws BaseSystemException {
+    public Person doEmailConfirmationWithToken(String token) throws ApplicationException {
         EmailConfirmationToken correctToken = this.emailTokenRepository.findByTokenAndDateExpiredAfter(token, Date.from(Instant.now()));
         if (correctToken == null) {
             processWithTokenConfirmationException(token);
@@ -114,7 +114,7 @@ public class PersonServiceImpl implements PersonService {
         return person;
     }
 
-    public void processWithTokenConfirmationException(String token) throws BaseSystemException {
+    public void processWithTokenConfirmationException(String token) throws ApplicationException {
         Map<String, Object> responseData = new HashMap<>();
         responseData.put("token", token);
 
@@ -122,9 +122,9 @@ public class PersonServiceImpl implements PersonService {
         EmailConfirmationToken expiredToken = emailTokenRepository.findByToken(token);
         if (expiredToken != null) {
             responseData.put("expiredDate", expiredToken.getDateExpired());
-            throw new BaseSystemException("Email token expired at: " + expiredToken.getDateExpired(), CustomExceptionStatus.EMAIL_TOKEN_HAS_EXPIRED, responseData);
+            throw new ApplicationException("Email token expired at: " + expiredToken.getDateExpired(), Code.EMAIL_TOKEN_HAS_EXPIRED, responseData);
         } else {
-            throw new BaseSystemException("Email token doesn't exist", CustomExceptionStatus.EMAIL_TOKEN_NOT_FOUND, responseData);
+            throw new ApplicationException("Email token doesn't exist", Code.EMAIL_TOKEN_NOT_FOUND, responseData);
         }
     }
 }

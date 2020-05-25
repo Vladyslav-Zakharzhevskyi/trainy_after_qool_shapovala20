@@ -1,7 +1,7 @@
 package com.investigation.develop.circle.service;
 
 import com.investigation.develop.circle.entity.Person;
-import com.investigation.develop.circle.exception.CustomExceptionStatus;
+import com.investigation.develop.circle.exception.Code;
 import com.investigation.develop.circle.exception.UserEmailNotConfirmedException;
 import com.investigation.develop.circle.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class AuthenticationUserDetailsService implements UserDetailsService {
                 orElseThrow(() -> new UsernameNotFoundException("User with username has not found"));
 
         if (!person.getEmailConfirmed()) {
-            throw new UserEmailNotConfirmedException("User's Email hasn't confirmed", CustomExceptionStatus.EMAIL_HAS_NOT_CONFIRMED);
+            throw new UserEmailNotConfirmedException("User's Email hasn't confirmed", Code.EMAIL_HAS_NOT_CONFIRMED);
         }
 
         return person;

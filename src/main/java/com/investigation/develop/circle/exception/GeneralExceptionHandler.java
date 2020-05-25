@@ -19,16 +19,16 @@ public class GeneralExceptionHandler {
         return new ResponseEntity<>(new ExceptionResponse("Backend Error", ex.toString(), 500), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(BaseSystemException.class)
-    public ResponseEntity<ExceptionResponse> handleBaseSystemError(BaseSystemException ex) {
+    @ExceptionHandler(ApplicationException.class)
+    public ResponseEntity<ExceptionResponse> handleBaseSystemError(ApplicationException ex) {
         logger.error(ex);
-        return new ResponseEntity<>(new ExceptionResponse("Backend Error", ex.toString(), ex.getStatus().getCode(), ex.getData()), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(new ExceptionResponse("Backend Error", ex.toString(), ex.getCode().getValue(), ex.getData()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(UserEmailNotConfirmedException.class)
     public ResponseEntity<ExceptionResponse> handleUserEmailNotConfirmedError(UserEmailNotConfirmedException ex) {
         logger.error(ex);
-        return new ResponseEntity<>(new ExceptionResponse("Backend Error", ex.toString(), ex.getStatus().getCode()), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(new ExceptionResponse("Backend Error", ex.toString(), ex.getCode().getValue()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

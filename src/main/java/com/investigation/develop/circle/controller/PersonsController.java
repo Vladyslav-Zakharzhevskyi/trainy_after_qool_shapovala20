@@ -4,8 +4,8 @@ import com.google.common.base.Strings;
 import com.investigation.develop.circle.converter.DtoConverter;
 import com.investigation.develop.circle.dto.OfferDto;
 import com.investigation.develop.circle.entity.Offer;
-import com.investigation.develop.circle.exception.BaseSystemException;
-import com.investigation.develop.circle.exception.CustomExceptionStatus;
+import com.investigation.develop.circle.exception.ApplicationException;
+import com.investigation.develop.circle.exception.Code;
 import com.investigation.develop.circle.service.OfferService;
 import com.investigation.develop.circle.service.PersonService;
 import com.investigation.develop.circle.converter.PersonDtoConverter;
@@ -37,7 +37,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.UUID;
 
 
 @RestController
@@ -79,7 +78,7 @@ public class PersonsController {
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public PersonDto updatePerson(@AuthenticationPrincipal Person user, @RequestBody NewPersonDto personDto) throws BaseSystemException {
+    public PersonDto updatePerson(@AuthenticationPrincipal Person user, @RequestBody NewPersonDto personDto) throws ApplicationException {
         Person updatedPerson  = personService.updatePerson(personDto);
         return personDtoConverter.convert(updatedPerson);
     }
@@ -106,7 +105,7 @@ public class PersonsController {
     }
 
     @RequestMapping(value = "/confirmEmail", method = RequestMethod.GET)
-    public ResponseEntity<BaseResponseEntity> confirmEmail(@RequestParam(name = "token") String token) throws BaseSystemException {
+    public ResponseEntity<BaseResponseEntity> confirmEmail(@RequestParam(name = "token") String token) throws ApplicationException {
 
         Person person = personService.doEmailConfirmationWithToken(token);
 
@@ -126,7 +125,7 @@ public class PersonsController {
     @RequestMapping(value = "/offer", method = RequestMethod.POST)
     public List<OfferDto> addProposalMessage(@RequestParam(name = "message") String message,
                                              @RequestParam(name = "anonymousPost") Boolean postIsAnonymous,
-                                             Principal p) throws BaseSystemException {
+                                             Principal p) throws ApplicationException {
 
         checkProposalMessageNotEmpty(message);
 
@@ -135,9 +134,9 @@ public class PersonsController {
         return getAllProposalsToImplement();
     }
 
-    private void checkProposalMessageNotEmpty(@RequestParam(name = "message") String message) throws BaseSystemException {
+    private void checkProposalMessageNotEmpty(@RequestParam(name = "message") String message) throws ApplicationException {
         if (Strings.isNullOrEmpty(message)) {
-            throw new BaseSystemException("Proposal should not be empty", CustomExceptionStatus.VALUE_MISS_MATCH);
+            throw new ApplicationException("Proposal should not be empty", Code.VALUE_MISS_MATCH);
         }
     }
 
@@ -146,7 +145,7 @@ public class PersonsController {
     public List<OfferDto> updateProposalMessage(@PathVariable(name = "offerId") Long offerId,
                                                 @RequestParam(name = "message") String message,
                                                 @RequestParam(name = "anonymousPost") Boolean postIsAnonymous,
-                                                Principal p) throws BaseSystemException {
+                                                Principal p) throws ApplicationException {
 
         checkProposalMessageNotEmpty(message);
 
@@ -158,7 +157,7 @@ public class PersonsController {
     @RequestMapping(value = "/offer/{offerId}", method = RequestMethod.DELETE)
     @PreAuthorize("@securityService.checkEnableToEditOffer(#offerId, #p)")
     public List<OfferDto> deleteProposalMessage(@PathVariable(name = "offerId") Long offerId,
-                                                Principal p) throws BaseSystemException {
+                                                Principal p) throws ApplicationException {
         offerService.deleteOffer(offerId);
         return getAllProposalsToImplement();
     }
