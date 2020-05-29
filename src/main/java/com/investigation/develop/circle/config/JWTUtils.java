@@ -1,6 +1,7 @@
 package com.investigation.develop.circle.config;
 
 import com.investigation.develop.circle.entity.Person;
+import com.investigation.develop.circle.util.DateUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
@@ -10,7 +11,6 @@ import io.jsonwebtoken.UnsupportedJwtException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -24,13 +24,11 @@ public class JWTUtils {
     @Value("${jwt.secret.key}")
     private String secretKey;
 
-    private Integer expiredTimeMs = 60000 * 60 * 3; /*3 HOURS*/
-
-    public String generateJwtToken(Person user) {
+    public String generateJwtToken(Person user, Integer workTimeHrs) {
         return Jwts.builder()
                 .setSubject(user.getUsername())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + expiredTimeMs))
+                .setExpiration(DateUtil.currentDateWithIncreasedHours(workTimeHrs))
                 .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();
     }

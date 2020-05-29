@@ -14,6 +14,7 @@ import com.investigation.develop.circle.util.DateUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +24,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+
+import static com.google.common.collect.Maps.newHashMap;
 
 @Service
 public class PersonServiceImpl implements PersonService {
@@ -42,6 +45,7 @@ public class PersonServiceImpl implements PersonService {
     private SystemPropertyService propertyService;
 
     @Autowired
+    @Qualifier("welcomeWithEmailConfirmationEmailLetter")
     private EMailSender eMailSender;
 
     @Override
@@ -56,7 +60,9 @@ public class PersonServiceImpl implements PersonService {
             // Set confirmation flag to false
             person.setEmailConfirmed(Boolean.FALSE);
             // Send confirmation email to User
-            eMailSender.sendEmailLetter(person, token);
+            Map<String, Object> data = newHashMap();
+            data.put("token", token);
+            eMailSender.sendEmailLetter(person, data);
             // Update person
             savedPerson = personRepository.save(person);
         }
