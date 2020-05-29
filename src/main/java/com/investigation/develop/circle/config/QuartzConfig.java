@@ -29,8 +29,8 @@ public class QuartzConfig {
         return TriggerBuilder.newTrigger().forJob(job)
                 .withIdentity("Add_proposal_to_dashboard_trigger")
                 .withDescription("Trigger for 'Add_proposal_to_dashboard_job'")
-//                .withSchedule(cronSchedule(cronTime))
-                .withSchedule(simpleSchedule().withRepeatCount(0).withIntervalInSeconds(30))
+                .withSchedule(cronSchedule(cronTime))
+//                .withSchedule(simpleSchedule().withRepeatCount(0).withIntervalInSeconds(30))
                 .build();
     }
 
