@@ -37,7 +37,7 @@ public class LeaveProposalNotificationJob implements Job {
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        logger.info("Starting execute Job: " + jobExecutionContext.getJobDetail().getKey().getName());
+        logger.info("Starting execute LeaveProposalNotificationJob: ");
         // Persons who has shared proposal
         List<Person> personsWithOffers = personRepository.findPersonsWithOffers();
         List<String> personsEmailsWithOffers = personsWithOffers.stream().map(Person::getEmail).collect(Collectors.toList());
