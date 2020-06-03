@@ -4,14 +4,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public class UserEmailNotConfirmedException extends UsernameNotFoundException {
 
-    private CustomExceptionStatus status;
+    private Code code;
 
-    public UserEmailNotConfirmedException(String msg, CustomExceptionStatus status) {
+    public UserEmailNotConfirmedException(String msg, Code code) {
         super(msg);
-        this.status = status;
+        this.code = code;
     }
 
-    public CustomExceptionStatus getStatus() {
-        return status;
+    public Code getCode() {
+        return code;
     }
 }

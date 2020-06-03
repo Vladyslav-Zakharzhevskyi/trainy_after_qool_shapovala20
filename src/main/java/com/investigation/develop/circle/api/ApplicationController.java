@@ -1,9 +1,11 @@
-package com.investigation.develop.circle.controller;
+package com.investigation.develop.circle.api;
 
 
-import com.investigation.develop.circle.exception.BaseSystemException;
-import com.investigation.develop.circle.exception.CustomExceptionStatus;
+import com.investigation.develop.circle.exception.ApplicationException;
+import com.investigation.develop.circle.exception.Code;
 import com.investigation.develop.circle.service.ApplicationService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,7 @@ import java.util.Objects;
 @Controller
 public class ApplicationController {
 
+    private Logger logger = LogManager.getLogger(ApplicationController.class);
 
     @Value("${authentication.method}")
     private String authenticationType;
@@ -39,9 +42,10 @@ public class ApplicationController {
         return ResponseEntity.ok().body(settings);
     }
 
+    @SuppressWarnings("Data from any repository available from anywhere!")
     @RequestMapping(value = "/api/getDataByType/{type}/{resource}", method = RequestMethod.GET)
     public ResponseEntity<Object> getDataByType(@PathVariable(name = "type") String type,
-                                                @PathVariable(name = "resource") String name) throws BaseSystemException, ClassNotFoundException {
+                                                @PathVariable(name = "resource") String name) throws ApplicationException, ClassNotFoundException {
         Objects.requireNonNull(type);
         Objects.requireNonNull(name);
 
@@ -54,7 +58,7 @@ public class ApplicationController {
                 data = applicationService.getDataByRepository(name);
                 break;
             default:
-                throw new BaseSystemException(String.format("Can't handle for type: %s", type), CustomExceptionStatus.GENERAL_EXCEPTION);
+                throw new ApplicationException(String.format("Can't handle for type: %s", type), Code.GENERAL_EXCEPTION);
         }
 
         return ResponseEntity.ok(data);
