@@ -3,14 +3,16 @@ package com.investigation.develop.circle.converter;
 import com.investigation.develop.circle.dto.NewPersonDto;
 import com.investigation.develop.circle.dto.PersonDto;
 import com.investigation.develop.circle.entity.Person;
+import com.investigation.develop.circle.entity.Position;
+import com.investigation.develop.circle.entity.Role;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 @Component
 public class PersonDtoConverterImpl implements PersonDtoConverter {
@@ -30,11 +32,13 @@ public class PersonDtoConverterImpl implements PersonDtoConverter {
                 person.getUserName(),
                 person.getFirstName(),
                 person.getLastName(),
+                person.getRoles().stream().map(Role::getRoleName).collect(Collectors.toList()),
                 person.getEmail(),
+                person.isEmailConfirmed(),
                 person.getAge(),
-                person.getPosition() != null ? person.getPosition().getId() : -1,
+                Optional.ofNullable(person.getPosition()).map(Position::getId).orElse(-1),
                 person.getSalary(),
-                person.getCurrency() != null ? person.getCurrency().name() : "",
+                Optional.ofNullable(person.getCurrency()).map(Enum::name).orElse(Strings.EMPTY),
                 person.getAddress()
         );
     }

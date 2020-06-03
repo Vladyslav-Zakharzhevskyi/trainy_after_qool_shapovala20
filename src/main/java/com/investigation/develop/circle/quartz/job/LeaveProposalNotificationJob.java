@@ -55,7 +55,7 @@ public class LeaveProposalNotificationJob implements Job {
         final List<Person> allPersons = personRepository.findAll();
 
         Map<String, Person> emailByPerson = allPersons.stream()
-                .filter(Person::getEmailConfirmed)
+                .filter(Person::isEmailConfirmed)
                 .collect(Collectors.toMap(Person::getEmail, Function.identity(), (first, second) -> first));
 
         personsToNotify.accept(emailByPerson.values());
