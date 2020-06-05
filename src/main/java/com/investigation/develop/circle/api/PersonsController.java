@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -85,14 +86,13 @@ public class PersonsController {
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     @Transactional
-    public List<PersonDto> getPersons() {
-        List<Person> persons = personRepository.findAll();
-        for (Person person : persons) {
-            if (persons.size() > 1) {
-                persons.remove(person);
-            }
+    public List<PersonDto> getPersons(Principal p) {
+        if (securityService.isUserAdmin(Context.getUser(p))) {
+            List<Person> persons = personRepository.findAll();
+            return personDtoConverter.convert(persons);
         }
-        return personDtoConverter.convert(persons);
+
+        return personDtoConverter.convert(Collections.emptyList());
     }
 
     @RequestMapping(value = "/checkUserNameAvailability/{username}", method = RequestMethod.POST)

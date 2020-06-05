@@ -1,17 +1,23 @@
 package com.investigation.develop.circle.entity;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "person")
@@ -37,6 +43,12 @@ public class Person extends BaseModel implements UserDetails {
 
     @Column(name = "age", columnDefinition = "integer")
     private Integer age;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "users_have_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<Role> roles;
 
     @OneToOne
     @JoinColumn(name = "position_id")
@@ -86,7 +98,7 @@ public class Person extends BaseModel implements UserDetails {
         this.email = email;
     }
 
-    public Boolean getEmailConfirmed() {
+    public Boolean isEmailConfirmed() {
         return emailConfirmed;
     }
 
@@ -105,6 +117,14 @@ public class Person extends BaseModel implements UserDetails {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     public Position getPosition() {
@@ -141,7 +161,7 @@ public class Person extends BaseModel implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.emptyList();
+        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getRoleName())).collect(Collectors.toList());
     }
 
     @Override
@@ -174,13 +194,5 @@ public class Person extends BaseModel implements UserDetails {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "Person{" +
-                "userName='" + userName + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                '}';
-    }
+
 }
