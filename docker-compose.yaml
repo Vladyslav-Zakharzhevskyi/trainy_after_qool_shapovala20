@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   web:
-    image: investigation-frontend-image:1-initial
+    image: arkansas3000/invest-front-image:latest
     container_name: web-service
     restart: "no"
     ports:
@@ -9,7 +9,7 @@ services:
     depends_on:
       - backend
   backend:
-    image: investigation-backend-image:1-initial
+    image: arkansas3000/invest-back-image:initial
     container_name: backend-service
     ports:
       - 8080:5000
