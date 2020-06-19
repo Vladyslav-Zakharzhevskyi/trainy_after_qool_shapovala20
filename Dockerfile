@@ -1,12 +1,12 @@
-FROM zenika/alpine-maven:3-jdk8 AS MAVEN_CONTAINER
+FROM zenika/alpine-maven:3-jdk8 AS build
 WORKDIR /build/
 COPY pom.xml /build/
 COPY src /build/src/
 RUN mvn package
 
+FROM devexdev/8-jdk-alpine
+WORKDIR /app/
+COPY --from=build /build/target/investigation-development-2.0.0-SNAPSHOT.war /app
+EXPOSE 3001
 
-FROM devexdev/8-jdk-alpine AS JAVA_CONTAINER
-WORKDIR /usr/vlad/app/
-COPY --from=MAVEN_CONTAINER /build/target/investigation-development*.war /usr/vlad/app
-EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "investigation-development*.war"]
+ENTRYPOINT ["java", "-jar", "/app/investigation-development-2.0.0-SNAPSHOT.war"]
