@@ -24,6 +24,7 @@ services:
 #    ports:
 #      - 5001:3001
     environment:
+      - ACTIVE_PROFILE=amazon
       - HOST_URL=http://application-1062058043.us-east-2.elb.amazonaws.com:5001/
     depends_on:
       - postgresdb
