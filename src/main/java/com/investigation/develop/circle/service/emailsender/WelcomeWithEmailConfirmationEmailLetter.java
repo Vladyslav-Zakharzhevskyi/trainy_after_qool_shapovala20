@@ -43,7 +43,7 @@ public class WelcomeWithEmailConfirmationEmailLetter extends AbstractEmailSender
     }
 
     private String getConfirmEmailUrl(EmailConfirmationToken confirmationToken) {
-        return this.host + "login?token=" + confirmationToken.getToken();
+        return context.getHost() + "login?token=" + confirmationToken.getToken();
     }
 
 

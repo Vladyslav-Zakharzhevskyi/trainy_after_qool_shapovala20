@@ -1,5 +1,8 @@
 package com.investigation.develop.circle.service.emailsender;
 
+import com.investigation.develop.circle.system.Context;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -13,8 +16,10 @@ import javax.mail.internet.MimeMessage;
 @Service
 public abstract class AbstractEmailSender implements EMailSender {
 
-    @Value("${host}")
-    protected String host;
+    private Logger logger = LogManager.getLogger(AbstractEmailSender.class);
+
+    @Autowired
+    protected Context context;
 
     @Value("classpath:public/logo.png")
     protected Resource mainLogoResource;
@@ -37,6 +42,7 @@ public abstract class AbstractEmailSender implements EMailSender {
 
     private void addResources(MimeMessageHelper helper) throws MessagingException {
         helper.addInline("main_logo", mainLogoResource);
-
     }
+
+
 }

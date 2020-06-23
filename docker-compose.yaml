@@ -23,6 +23,8 @@ services:
     restart: on-failure
 #    ports:
 #      - 5001:3001
+    environment:
+      - HOST_URL=http://application-1062058043.us-east-2.elb.amazonaws.com:5001/
     depends_on:
       - postgresdb
   postgresdb:
@@ -37,5 +39,3 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=pspostgres
       - POSTGRES_DB=app
-
-

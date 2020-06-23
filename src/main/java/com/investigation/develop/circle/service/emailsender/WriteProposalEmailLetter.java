@@ -18,6 +18,7 @@ public class WriteProposalEmailLetter extends AbstractEmailSender implements EMa
     private Logger logger = LogManager.getLogger(WriteProposalEmailLetter.class);
 
     public static final int TOKEN_AVAILIABILITY_TIME = 24 * 10;
+
     @Autowired
     private JWTUtils jwtUtils;
 
@@ -34,7 +35,7 @@ public class WriteProposalEmailLetter extends AbstractEmailSender implements EMa
     }
 
     private String getBodyText(Person person) {
-        String addProposalLink = host + "applications?externalLoginToken=" + jwtUtils.generateJwtToken(person, TOKEN_AVAILIABILITY_TIME);
+        String addProposalLink = context.getHost() + "applications?externalLoginToken=" + jwtUtils.generateJwtToken(person, TOKEN_AVAILIABILITY_TIME);
         return String.format(PROPOSAL_ADVICE_QUESTION_CONTENT, person.getFirstName(), addProposalLink, addProposalLink, getExpiredTime());
     }
 
