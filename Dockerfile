@@ -9,4 +9,4 @@ WORKDIR /app/
 COPY --from=build /build/target/investigation-development-2.0.0-SNAPSHOT.war /app
 EXPOSE 3001
 
-ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=${ACTIVE_PROFILE} -DHOST_URL=${HOST_URL}", "/app/investigation-development-2.0.0-SNAPSHOT.war"]
+ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=${ACTIVE_PROFILE},-DHOST_URL=${HOST_URL}", "/app/investigation-development-2.0.0-SNAPSHOT.war"]
