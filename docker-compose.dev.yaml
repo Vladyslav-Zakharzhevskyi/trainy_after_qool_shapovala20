@@ -1,0 +1,48 @@
+version: "3.3"
+services:
+  nginx:
+    depends_on:
+      - web
+      - backend
+    restart: always # because it is routing traffic to our entire app
+    build:
+      context: nginx
+      dockerfile: Dockerfile
+    container_name: nginx
+    ports:
+      - 5001:80
+  web:
+    build:
+      context: /home/vladyslav/programs/Projects/investigation-frontend
+      dockerfile: Dockerfile
+    container_name: web
+    restart: on-failure
+    #    ports:
+    #      - 5000:3000
+    depends_on:
+      - backend
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: backend
+    restart: on-failure
+    #    ports:
+    #      - 5001:3001
+    environment:
+      - ACTIVE_PROFILE=amazon
+      - HOST_URL=http://application-1062058043.us-east-2.elb.amazonaws.com:5001/
+    depends_on:
+      - postgresdb
+  postgresdb:
+    image: postgres
+    container_name: postgresdb
+    restart: "no"
+    ports:
+      - 5432:5432
+    volumes:
+      - /usr/vlad/docker/mount/postgresql/data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=pspostgres
+      - POSTGRES_DB=app
